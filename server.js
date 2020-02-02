@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const cors = require("cors");
 const path = require("path")
+var router = express.Router();
+
 
 const lessonRoute = require("./routes/index");
 const subscribe = require("./routes/subscribe");
@@ -33,6 +35,7 @@ mongoose.connection.on("connected",(err,res) => {
 });
 
 // app.use("/login/admin", authRoute);
+app.use("/",router)
 app.use("/create-lesson", lessonRoute)
 app.use("/get-files", subscribe);
 app.use("/subscribes",subscribe);
