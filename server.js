@@ -20,7 +20,7 @@ app.use(bodyParser.json())
 app.use("/public", express.static(path.join(__dirname, 'public')));
 
 //Database connection
-mongoose.connect(`mongodb+srv://albert:Admin%23777!@cluster0-8xyhu.mongodb.net/test?retryWrites=true&w=majority/test`, { useNewUrlParser :"false"});
+mongoose.connect(`mongodb+srv://albert:Admin%23777!@cluster0-8xyhu.mongodb.net/test?retryWrites=true&w=majority`, { useNewUrlParser :"false"});
 
 //Handle database connection error
 mongoose.connection.on("error",(err)=>{
