@@ -51,6 +51,7 @@ router.post("/create", upload.single('image'), function(req, res, next){
 		console.log(">>>>>>>>>>>>>>", data)
 		Videoblog.create({...data}, (err, post) => {
 			if (err){
+        console.log("ERROR>>>>>>>>", err)
 				res.json({message: "Something went wrong", code: 500})
 			}else
 			res.json({message: "Success", code: 200});
