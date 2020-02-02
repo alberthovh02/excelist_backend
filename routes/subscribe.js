@@ -5,11 +5,10 @@ const nodemailer = require("nodemailer");
 const router = Router();
 
 router.get("/", function(req, res, next) {
-	// Subscribe.find(function(err, lesson) {
-	// 	if (err) throw new Error(err);
-	// 	res.json(lesson);
-	// });
-	return true
+	Subscribe.find(function(err, lesson) {
+		if (err) throw new Error(err);
+		res.json(lesson);
+	});
 });
 
 router.post("/send", function(req, res, next) {
