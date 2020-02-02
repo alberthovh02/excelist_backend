@@ -37,6 +37,7 @@ router.get("/blogs-desc", function(req, res, next) {
 router.post("/create", upload.single('image'), function(req, res, next){
   const { language, title, video_link, file_link } = req.body;
 	if (!language || !title || !video_link || !file_link) {
+		console.log("data", req.body)
 		res.json({message: "Something went wrong", code: 500})
 		// next();
 	} else {
