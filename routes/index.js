@@ -5,7 +5,7 @@ const { Router } = require("express");
 // const jwt = require("jsonwebtoken");
 // const { check, validationResult } = require('express-validator');
 // const User = require("../models/User.js");
-const Lesson = require("../models/Lesson")
+const Lesson = require("../models/lesson")
 const router = Router();
 
 // router.post("/", async (req, res) => {
