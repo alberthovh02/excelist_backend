@@ -37,9 +37,8 @@ router.get("/blogs-desc", function(req, res, next) {
 router.post("/create", upload.single('image'), function(req, res, next){
   const { language, title, video_link, file_link } = req.body;
 	if (!language || !title || !video_link || !file_link) {
-		console.log("data", req.body)
-		res.json({message: "Something went wrong", code: 500})
-		// next();
+    console.log("Error when getting data fields are empty")
+		res.json({message: "Something went wrong", code: 400})
 	} else {
 		const data = {
 			language,
@@ -48,10 +47,9 @@ router.post("/create", upload.single('image'), function(req, res, next){
 			file_link,
 			imageUrl: req.file.path
 		}
-		console.log(">>>>>>>>>>>>>>", data)
 		Videoblog.create({...data}, (err, post) => {
 			if (err){
-        console.log("ERROR>>>>>>>>", err)
+        console.log("Error when videoblog create ", err)
 				res.json({message: "Something went wrong", code: 500})
 			}else
 			res.json({message: "Success", code: 200});
@@ -60,9 +58,11 @@ router.post("/create", upload.single('image'), function(req, res, next){
 })
 
 router.delete("/:id", function(req, res, next){
-  console.log(">>>>>>>>>>.", req.body)
+  console.log("Videoblog delete", req.body)
   Lesson.findByIdAndRemove(req.body._id,(err, post) => {
-    if(err) return next(err)
+    if(err) {
+      return next(err)
+    }
     res.json(post);
   })
 })

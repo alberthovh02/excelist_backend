@@ -5,16 +5,16 @@ const cors = require("cors");
 const path = require("path")
 var router = express.Router();
 
-
+//Routes
 const lessonRoute = require("./routes/index");
 const subscribe = require("./routes/subscribe");
 const singleData = require('./routes/singleData');
 const videoBlog = require("./routes/videoblog");
+const blogs = require("./routes/blogs");
 //Configurations
 const { server, database } = require("./config/config");
-
 const app = express();
-
+//Middlewares
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
 // parse application/json
@@ -39,9 +39,9 @@ mongoose.connection.on("connected",(err,res) => {
 app.use("/create-lesson", lessonRoute)
 // app.use("/get-files", subscribe);
 app.use("/subscribes",subscribe);
-app.use('/students', singleData)
-app.use('/video-blog', videoBlog)
-;
+app.use('/students', singleData);
+app.use('/video-blog', videoBlog);
+app.use("/blogs", blogs);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`App is running in port ${PORT}`))
