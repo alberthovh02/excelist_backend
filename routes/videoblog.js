@@ -61,9 +61,10 @@ router.delete("/:id", function(req, res, next){
   console.log("Videoblog delete", req.body)
   Videoblog.findByIdAndRemove(req.body._id,(err, post) => {
     if(err) {
+      console.log("Can't delete videoblog error: ", err)
       return next(err)
     }
-    res.json(post);
+    res.json({message: "Success", code: 200});
   })
 })
 
