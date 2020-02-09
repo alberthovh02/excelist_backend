@@ -64,8 +64,8 @@ router.post("/create", upload.single('image'), function(req, res, next){
 })
 
 router.delete("/:id", function(req, res, next){
-  console.log("Videoblog delete", req.body)
-  Videoblog.findByIdAndRemove(req.body._id,(err, post) => {
+  console.log("Videoblog delete", req.params)
+  Videoblog.findByIdAndRemove(req.params._id,(err, post) => {
     if(err) {
       console.log("Can't delete videoblog error: ", err)
       return next(err)
