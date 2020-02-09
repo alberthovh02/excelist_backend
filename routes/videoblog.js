@@ -51,7 +51,8 @@ router.post("/create", upload.single('image'), function(req, res, next){
 			title,
 			video_link,
 			file_link,
-			imageUrl: req.file.path
+			imageUrl: req.file.path,
+      generatedUrl
 		}
 		Videoblog.create({...data}, (err, post) => {
 			if (err){
