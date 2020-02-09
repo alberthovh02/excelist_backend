@@ -34,7 +34,7 @@ router.get("/blogs-desc", function(req, res, next) {
 	});
 });
 
-router.get('/:videobloglink', function(req, res, next){
+router.get('/video/:videobloglink', function(req, res, next){
   console.log("PArams ", req.params.videobloglink)
 })
 
