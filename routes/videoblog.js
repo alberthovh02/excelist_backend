@@ -36,6 +36,8 @@ router.get("/blogs-desc", function(req, res, next) {
 
 router.post("/create", upload.single('image'), function(req, res, next){
   const { language, title, video_link, file_link } = req.body;
+  const generatedUrl = title + language + video_link;
+  console.log("GENERATED URL", generatedUrl);
 	if (!language || !title || !video_link || !file_link) {
     console.log("Error when getting data fields are empty")
 		res.json({message: "Something went wrong", code: 400})
