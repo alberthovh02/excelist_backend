@@ -4,8 +4,8 @@ const VideoBlog = require("../models/videoblog")
 const router = Router();
 
 router.get("/:url", function(req, res, next){
-  console.log("route>>>>>>>>>> ")
-  VideoBlog.find(function(err, post){
+  console.log("route>>>>>>>>>> ", req.params.url);
+  VideoBlog.findOne({'generatedUrl': req.params.url}, function(err, post){
     if(err) throw new Error(err);
     res.json(post)
   })
