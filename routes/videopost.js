@@ -3,7 +3,7 @@ const { Router } = require("express");
 const VideoBlog = require("../models/videoblog")
 const router = Router();
 
-router.get("/", function(req, res, next){
+router.get("/:url", function(req, res, next){
   console.log("route>>>>>>>>>> ")
   VideoBlog.find(function(err, post){
     if(err) throw new Error(err);
