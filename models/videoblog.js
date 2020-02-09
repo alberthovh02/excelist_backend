@@ -22,7 +22,11 @@ const videoblogSchema = new Schema({
       required: true
     },
     imageUrl: {
-      type: "String",
+      type: String,
+      required: true
+    },
+    generatedUrl: {
+      type: String,
       required: true
     }
 })
