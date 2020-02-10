@@ -1,7 +1,34 @@
 const express = require("express");
 const { Router } = require("express");
+const multer = require('multer');
+
 const Blogs = require("../models/blogs")
 const router = Router();
+
+
+const PATH = 'public/images/uploads/blogs';
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, PATH);
+    },
+    filename: (req, file, cb) => {
+        const fileName = file.originalname.toLowerCase().split(' ').join('-');
+        cb(null, fileName)
+    }
+});
+
+const upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error('Allowed only .png, .jpg, .jpeg and .gif'));
+        }
+    }
+});
 
 router.get("/", function(req, res, next){
   Blogs.find(function(err, lesson){
@@ -10,18 +37,29 @@ router.get("/", function(req, res, next){
   })
 })
 
-// router.post("/create", function(req, res, next){
-//   const { name, endTime } = req.body;
-//
-//   if(!name || !endTime){
-//     next()
-//   }else{
-//   Lesson.create(req.body, (err, post) => {
-//     if(err) throw new Error(err);
-//     res.json({message: "Success", code: 200})
-//   })
-// }
-// })
+router.post("/create", upload.single('image'), function(req, res, next){
+  const { title, imageUrl, content } = req.body;
+  const generatedUrl = `${title.trim()}`;
+  console.log("GENERATED URL", generatedUrl);
+	if (!title || !imageUrl || !content) {
+    console.log("Error when getting data fields are empty")
+		res.json({message: "Something went wrong", code: 400})
+	} else {
+		const data = {
+			title,
+			imageUrl: req.file.path,
+      content,
+      generatedUrl
+		}
+		Blogs.create({...data}, (err, post) => {
+			if (err){
+        console.log("Error when videoblog create ", err)
+				res.json({message: "Something went wrong", code: 500})
+			}else
+			res.json({message: "Success", code: 200});
+		});
+  }
+})
 //
 // router.delete("/:id", function(req, res, next){
 //   console.log(">>>>>>>>>>.", req.body)

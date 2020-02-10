@@ -1,17 +1,21 @@
 const { Schema, model, Types } = require("mongoose");
 
 const blogsSchema = new Schema({
-    name: {
+    title: {
         type: String,
         required: true,
     },
-    email: {
+    imageUrl: {
       type: String,
       required: true
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
+    generatedUrl: {
+      type: String,
+      required: true
+    },
+    content: {
+      type: String,
+      required: true
     }
 })
 
