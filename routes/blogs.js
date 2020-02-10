@@ -38,7 +38,7 @@ router.get("/", function(req, res, next){
 })
 
 router.post("/create", upload.single('image'), function(req, res, next){
-  const { title, imageUrl, content } = req.body;
+  const { title, content } = req.body;
   const generatedUrl = `${title.trim()}`;
   console.log("GENERATED URL", generatedUrl);
 	if (!title || !imageUrl || !content) {
