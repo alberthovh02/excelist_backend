@@ -41,7 +41,7 @@ router.post("/create", upload.single('image'), function(req, res, next){
   const { title, content } = req.body;
   const generatedUrl = `${title.trim()}`;
   console.log("GENERATED URL", generatedUrl);
-	if (!title || !imageUrl || !content) {
+	if (!title || !content) {
     console.log("Error when getting data fields are empty")
 		res.json({message: "Something went wrong", code: 400})
 	} else {
