@@ -49,11 +49,24 @@ router.post("/create", upload.single('image') ,function(req, res, next) {
 	}
 });
 
+router.put('/:id', function(req, res, next){
+  Feedbacks.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {new: true},
+    (err, feedback) => {
+    // Handle any possible database errors
+        if (err) return res.status(500).send(err);
+        return res.json({message: "Updated", code: 200});
+    }
+)
+})
+
 router.delete("/:id", function(req, res, next){
   console.log(">>>>>>>>>>.", req.params.id)
   Feedbacks.findByIdAndRemove(req.params.id,(err, post) => {
     if(err) return next(err)
-    res.json(post);
+    res.json({message: "successfully deleted", code: 200});
   })
 })
 
