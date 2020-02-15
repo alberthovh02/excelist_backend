@@ -27,10 +27,7 @@ const upload = multer({
     }
 });
 
-router.use(express.urlencoded({ extended: true }));
 
-// for parsing multipart/form-data
-router.use(upload.array()); 
 
 
 router.get("/", function(req, res, next) {
@@ -56,6 +53,10 @@ router.post("/create", upload.single('image') ,function(req, res, next) {
 });
 
 router.put('/:id', function(req, res, next){
+  router.use(express.urlencoded({ extended: true }));
+
+  // for parsing multipart/form-data
+  router.use(upload.array()); 
   console.log("iddd ", req.params.id, req.body)
   Feedbacks.findByIdAndUpdate(
     req.params.id,
