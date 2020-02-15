@@ -1,7 +1,7 @@
 const express = require("express");
 const {Router} = require("express");
 const multer = require('multer');
-const Feedbacks = require("../models/singleData");
+const Feedbacks = require("../models/feedbacks");
 const router = Router();
 const PATH = 'public/images/uploads/feedbacks';
 
@@ -38,6 +38,7 @@ router.get("/", function(req, res, next) {
 router.post("/create", upload.single('image') ,function(req, res, next) {
 	const { username, comment, link } = req.body;
 	if (!username, !comment || !link) {
+    console.log("errrrror")
 		next();
 	} else {
 		Feedbacks.create(req.body, (err, post) => {
