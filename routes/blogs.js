@@ -37,6 +37,14 @@ router.get("/", function(req, res, next){
   })
 })
 
+router.get("/:url", function(req, res, next){
+  console.log("route>>>>>>>>>> ", req.params.url);
+  Blogs.findOne({'generatedUrl': req.params.url}, function(err, post){
+    if(err) throw new Error(err);
+    res.json(post)
+  })
+})
+
 router.post("/create", upload.single('image'), function(req, res, next){
   const { title, content } = req.body;
   const generatedUrl = `${title.trim()}`;
