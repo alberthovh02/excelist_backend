@@ -41,7 +41,8 @@ router.post("/create", upload.single('image') ,function(req, res, next) {
     console.log("errrrror")
 		next();
 	} else {
-		Feedbacks.create(req.body, (err, post) => {
+    const data = {username, comment, link, imageUrl: req.file.path}
+		Feedbacks.create({...data}, (err, post) => {
 			if (err) throw new Error(err);
 			res.json({message: "Success", code: 200});
 		});
