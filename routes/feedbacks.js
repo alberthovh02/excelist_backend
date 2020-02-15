@@ -50,7 +50,7 @@ router.post("/create", upload.single('image') ,function(req, res, next) {
 });
 
 router.put('/:id', function(req, res, next){
-  Feedbacks.findByIdAndUpdate(
+  Feedbacks.findOneAndUpdate(
     req.params.id,
     req.body,
     {new: true},
