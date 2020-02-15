@@ -12,7 +12,7 @@ const singleData = require('./routes/singleData');
 const videoBlog = require("./routes/videoblog");
 const blogs = require("./routes/blogs");
 const videoblogpost = require("./routes/videopost");
-const blogpost = require('./routes/blogpost')l
+const blogpost = require('./routes/blogpost');
 //Configurations
 const { server, database } = require("./config/config");
 const app = express();
