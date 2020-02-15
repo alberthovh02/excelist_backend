@@ -1,12 +1,9 @@
 const express = require("express");
-const { Router } = require("express");
+const {Router} = require("express");
 const multer = require('multer');
-
-const Blogs = require("../models/blogs")
+const Feedbacks = require("../models/singleData");
 const router = Router();
-
-
-const PATH = 'public/images/uploads/blogs';
+const PATH = 'public/images/uploads/feedbacks';
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -30,37 +27,27 @@ const upload = multer({
     }
 });
 
-router.get("/", function(req, res, next){
-  Blogs.find(function(err, lesson){
-    if(err) throw new Error(err);
-    res.json(lesson)
-  })
-})
 
-router.post("/create", upload.single('image'), function(req, res, next){
-  const { title, content } = req.body;
-  const generatedUrl = `${title.trim()}`;
-  console.log("GENERATED URL", generatedUrl);
-	if (!title || !content) {
-    console.log("Error when getting data fields are empty")
-		res.json({message: "Something went wrong", code: 400})
+router.get("/", function(req, res, next) {
+	Feedbacks.find(function(err, lesson) {
+		if (err) throw new Error(err);
+		res.json(lesson);
+	});
+});
+
+router.post("/create", upload.single('image') ,function(req, res, next) {
+	const { username, comment, link } = req.body;
+	if (!username, !comment || !link) {
+		next();
 	} else {
-		const data = {
-			title,
-			imageUrl: req.file.path,
-      content,
-      generatedUrl
-		}
-		Blogs.create({...data}, (err, post) => {
-			if (err){
-        console.log("Error when videoblog create ", err)
-				res.json({message: "Something went wrong", code: 500})
-			}else
+		Feedbacks.create(req.body, (err, post) => {
+			if (err) throw new Error(err);
 			res.json({message: "Success", code: 200});
 		});
-  }
-})
-//
+
+	}
+});
+
 // router.delete("/:id", function(req, res, next){
 //   console.log(">>>>>>>>>>.", req.body)
 //   Lesson.findByIdAndRemove(req.body._id,(err, post) => {
@@ -69,4 +56,4 @@ router.post("/create", upload.single('image'), function(req, res, next){
 //   })
 // })
 
-module.exports = router
+module.exports = router;

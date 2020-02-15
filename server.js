@@ -13,6 +13,7 @@ const videoBlog = require("./routes/videoblog");
 const blogs = require("./routes/blogs");
 const videoblogpost = require("./routes/videopost");
 const blogpost = require('./routes/blogpost');
+const feedbacks = require('./routes/feedbacks');
 //Configurations
 const { server, database } = require("./config/config");
 const app = express();
@@ -44,8 +45,9 @@ app.use("/subscribes",subscribe);
 app.use('/students', singleData);
 app.use('/video-blog', videoBlog);
 app.use("/blogs", blogs);
-app.use('/videoblogpost', videoblogpost)
-app.use('/blogpost', blogpost)
+app.use('/videoblogpost', videoblogpost);
+app.use('/blogpost', blogpost);
+app.use('/user-feedbacks', feedbacks);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`App is running in port ${PORT}`))
