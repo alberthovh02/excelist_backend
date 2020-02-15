@@ -50,8 +50,8 @@ router.post("/create", upload.single('image') ,function(req, res, next) {
 });
 
 router.delete("/:id", function(req, res, next){
-  console.log(">>>>>>>>>>.", req.body)
-  Feedbacks.findByIdAndRemove(req.body._id,(err, post) => {
+  console.log(">>>>>>>>>>.", req.params.id)
+  Feedbacks.findByIdAndRemove(req.params.id,(err, post) => {
     if(err) return next(err)
     res.json(post);
   })
