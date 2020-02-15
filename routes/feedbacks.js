@@ -27,6 +27,11 @@ const upload = multer({
     }
 });
 
+router.use(express.urlencoded({ extended: true }));
+
+// for parsing multipart/form-data
+router.use(upload.array()); 
+
 
 router.get("/", function(req, res, next) {
 	Feedbacks.find(function(err, lesson) {
