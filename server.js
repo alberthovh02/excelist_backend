@@ -12,6 +12,7 @@ const singleData = require('./routes/singleData');
 const videoBlog = require("./routes/videoblog");
 const blogs = require("./routes/blogs");
 const videoblogpost = require("./routes/videopost");
+const blogpost = require('./routes/blogpost')l
 //Configurations
 const { server, database } = require("./config/config");
 const app = express();
@@ -44,6 +45,7 @@ app.use('/students', singleData);
 app.use('/video-blog', videoBlog);
 app.use("/blogs", blogs);
 app.use('/videoblogpost', videoblogpost)
+app.use('/blogpost', blogpost)
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`App is running in port ${PORT}`))
