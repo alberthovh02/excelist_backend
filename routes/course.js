@@ -2,7 +2,7 @@ const express = require("express");
 const { Router } = require("express");
 const multer = require('multer');
 
-const Course = require("../models/blogs")
+const Course = require("../models/course")
 const router = Router();
 
 
