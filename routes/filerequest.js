@@ -15,7 +15,7 @@ const router = Router();
 router.post("/sendFile", function(req, res, next) {
 	const { name, profecion, email, videoLink } = req.body;
   console.log("Videolink>>>>", videoLink)
-  SingleData.find({title: videoLink},function(err, link) {
+  Videoblog.find({title: videoLink},function(err, link) {
   		if (err) throw new Error(err);
   		res.json(link);console.log(link)
   	});
