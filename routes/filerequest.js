@@ -15,9 +15,9 @@ const router = Router();
 router.post("/sendFile", function(req, res, next) {
 	const { name, profecion, email, videoLink } = req.body;
   console.log("Videolink>>>>", videoLink)
-  Videoblog.find({title: videoLink},function(err, link) {
+  Videoblog.findOne({title: videoLink},function(err, link) {
   		if (err) throw new Error(err);
-  		res.json(link);console.log(link)
+  		res.json(link);console.log(link.file_link)
 
 	if (!name || !profecion || !email || !videoLink) {
     res.json({code: 400, message: 'empty data'}).code(400)
