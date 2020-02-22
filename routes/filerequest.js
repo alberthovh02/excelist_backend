@@ -17,7 +17,7 @@ router.post("/sendFile", function(req, res, next) {
   console.log("Videolink>>>>", videoLink)
   Videoblog.find({title: videoLink},function(err, link) {
   		if (err) throw new Error(err);
-  		res.json(link);console.log(link.file_link)
+  		res.json(link);console.log(link)
 
 	if (!name || !profecion || !email || !videoLink) {
     res.json({code: 400, message: 'empty data'}).code(400)
