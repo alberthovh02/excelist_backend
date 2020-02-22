@@ -1,6 +1,6 @@
 const express = require("express");
 const {Router} = require("express");
-// const SingleData = require("../models/singleData");
+const Videoblog = require("../models/videoblog");
 const nodemailer = require("nodemailer");
 
 const router = Router();
@@ -14,6 +14,11 @@ const router = Router();
 
 router.post("/sendFile", function(req, res, next) {
 	const { name, profecion, email, videoLink } = req.body;
+  console.log("Videolink>>>>", videoLink)
+  SingleData.find({title: videoLink},function(err, link) {
+  		if (err) throw new Error(err);
+  		res.json(link);console.log(link)
+  	});
 	if (!name || !profecion || !email || !videoLink) {
     res.json({code: 400, message: 'empty data'}).code(400)
 		next();
