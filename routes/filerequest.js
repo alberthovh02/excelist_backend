@@ -19,9 +19,9 @@ router.post("/sendFile", function(req, res, next) {
 		next();
 	} else {
     const transporter = nodemailer.createTransport({
-			service: "smtp.gmail.com",
+			service: "gmail",
       port: 465,
-      secure: true, 
+      secure: true,
 			auth: {
 				user: "albert.hovhannisyan.main@gmail.com",
 				pass: "alberthovh02"
