@@ -1,6 +1,7 @@
 const express = require("express");
 const {Router} = require("express");
 const router = Router();
+const path = require('path');
 
 router.post('/upload', (req, res, next) => {
   if(req.files === null){
@@ -8,8 +9,8 @@ router.post('/upload', (req, res, next) => {
   }
 
   const file = req.files.file;
-
-  file.mv(`../public/images/uploads/photos/${file.name}`, err => {
+  console.log(path.parse(`../public/images/uploads/photos/${file.name}`).root)
+  file.mv(`${path.parse(`../public/images/uploads/photos/${file.name}`).root}`, err => {
     if(err){
       console.error(err);
       return res.status(500).json({message: 'Something went wrong'})
