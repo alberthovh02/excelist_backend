@@ -20,10 +20,11 @@ const filerequest = require('./routes/filerequest');
 const { server, database } = require("./config/config");
 const app = express();
 //Middlewares
-app.use(bodyParser.urlencoded({ extended: false }))
+
 app.use(cors())
 // parse application/json
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use("/public", express.static(path.join(__dirname, 'public')));
 
 //Database connection

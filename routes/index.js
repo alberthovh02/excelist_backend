@@ -8,20 +8,6 @@ const { Router } = require("express");
 const Lesson = require("../models/lesson")
 const router = Router();
 
-// router.post("/", async (req, res) => {
-//   const { username, password } = req.body;
-//
-//   const admin = Admin.findOne({ username, password});
-//
-//   if(!admin){
-//     alert("Incorrect data")
-//   }else{
-//     alert("find")
-//   }
-//
-//
-// })
-
 router.get("/", function(req, res, next){
   Lesson.find(function(err, lesson){
     if(err) throw new Error(err);
