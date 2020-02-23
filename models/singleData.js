@@ -1,13 +1,20 @@
 const { Schema, model, Types } = require("mongoose");
 
 const singleDataSchema = new Schema({
-    count: {
-        type: Number,
-        required: true,
+    students_count: {
+        type: Number
     },
-    dataType: {
-      type: String,
-      required: true
+    lessons_count: {
+      type: Number
+    },
+    teachers_count:{
+      type: Number
+    },
+    members_count: {
+      type: Number
+    },
+    supporters_count: {
+      type: Number
     }
 })
 
