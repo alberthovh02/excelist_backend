@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
+const fileUpload = require("express-fileupload");
 const cors = require("cors");
 const path = require("path")
 var router = express.Router();
@@ -27,6 +28,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use("/public", express.static(path.join(__dirname, 'public')));
+app.use(fileUpload())
 
 //Database connection
 mongoose.connect(`mongodb+srv://albert:Admin%23777!@cluster0-8xyhu.mongodb.net/test?retryWrites=true&w=majority`, { useNewUrlParser :"false"});
