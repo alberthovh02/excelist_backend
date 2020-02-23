@@ -9,7 +9,7 @@ router.post('/upload', (req, res, next) => {
   }
 
   const file = req.files.file;
-  console.log(path.parse(__dirname).root)
+  console.log(path.parse(__dirname + '/../').root)
   file.mv(`${path.parse(`../public/images/uploads/photos/${file.name}`).root}`, err => {
     if(err){
       console.error(err);
