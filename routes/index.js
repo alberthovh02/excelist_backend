@@ -31,7 +31,7 @@ router.get("/", function(req, res, next){
 
 router.post("/create", function(req, res, next){
   const { name, endTime, endMinutes, image } = req.body;
-
+  console.log(name, endTime, endMinutes, image)
   if(!name || !endTime || !endMinutes || !image){
     res.json({message: "Empty data", code: 400})
     next()
