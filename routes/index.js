@@ -30,9 +30,10 @@ router.get("/", function(req, res, next){
 })
 
 router.post("/create", function(req, res, next){
-  const { name, endTime } = req.body;
+  const { name, endTime, endMinutes, image } = req.body;
 
-  if(!name || !endTime){
+  if(!name || !endTime || !endMinutes, !image){
+    res.json({message: "Empty data"}).code(400)
     next()
   }else{
   Lesson.create(req.body, (err, post) => {
