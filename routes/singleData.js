@@ -12,7 +12,7 @@ router.get("/", function(req, res, next) {
 
 router.post("/count", function(req, res, next) {
 	const { students_count, lessons_count, teachers_count, members_count, supporters_count } = req.body;
-		SingleData.findOneAndUpdate({students_count, lessons_count, teachers_count, members_count, supporters_count}, (err, post) => {
+		SingleData.create({students_count, lessons_count, teachers_count, members_count, supporters_count}, (err, post) => {
 			if (err) console.log(err);
 			console.log("post", post)
 			res.json({message: "Success", code: 200});
