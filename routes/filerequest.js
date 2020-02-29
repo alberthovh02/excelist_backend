@@ -38,7 +38,8 @@ router.post("/sendFile", function(req, res, next) {
 			from: "albert.hovhannisyan.main@gmail.com",
 			to: email,
 			subject: "Excelist new message",
-			text: `This is your file http://excelist-backend.herokuapp.com/${link.file_link}`
+			text: `This is your file http://excelist-backend.herokuapp.com/${link.file_link}`,
+			html: `Ահա Ձեր հարցված ֆայլը:${link.file_link}<br/>Շնորհակալություն որ հետևում եք մեր ալիքին:<br/><div>Հարգանքով «Էքսելիստ» ՍՊԸ:<br/><b>Հասցե</b> ք.Երևան Արշակունյաց 2,«Տիգրան Մեծ» հրատ. շենք, 3-րդ հարկ,<br/> <b>Հեռ</b> +374 55 50 57 57,<br/> <b>Կայք</b> www.excelist.am<br/> <b>Ֆեյսբուք</b> www.fb.com/excel.lessons:</div>`
 		};
 
 		transporter.sendMail(mailOptions, function(error, info) {
