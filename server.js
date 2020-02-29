@@ -46,7 +46,7 @@ mongoose.connection.on("connected",(err,res) => {
 
 // app.use("/login/admin", authRoute);
 // app.use("/",router)
-app.use("/create-lesson", lessonRoute)
+app.use("/lesson", lessonRoute)
 app.use("/get-files", subscribe);
 app.use("/subscribes",subscribe);
 app.use('/students', singleData);
