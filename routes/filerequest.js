@@ -37,7 +37,7 @@ router.post("/sendFile", function(req, res, next) {
 			from: "albert.hovhannisyan.main@gmail.com",
 			to: "albert.hovhannisyan002@gmail.com",
 			subject: "Excelist new message",
-			text: `This is your file ${link.file_link}`
+			text: `This is your file http://excelist-backend.herokuapp.com/${link.file_link}`
 		};
 
 		transporter.sendMail(mailOptions, function(error, info) {
