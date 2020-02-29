@@ -38,9 +38,9 @@ router.get('/video/:videobloglink', function(req, res, next){
   console.log("PArams ", req.params.videobloglink)
 })
 
-router.post("/create", upload.single('image'), function(req, res, next){
-  console.log('File', req.file)
-  const { language, title, video_link, file_link } = req.body;
+router.post("/create", upload.single('image','file_link'), function(req, res, next){
+  console.log('File', req.files)
+  const { language, title, video_link } = req.body;
   const generatedUrl = `${title.trim()}_${language}`;
   console.log("GENERATED URL", generatedUrl);
 	if (!language || !title || !video_link) {
