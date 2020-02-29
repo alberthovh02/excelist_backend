@@ -76,9 +76,7 @@ router.post("/sendMail", function(req, res, next){
 				transporter.sendMail(mailOptions, function(error, info) {
 					if (error) {
 						console.log(error);
-						message.error({content: "Error: Message not sent" + error})
 					} else {
-						message.success({content: "Messsage sent"})
 						console.log("Email sent: " + info.response);
 					}
 				});
