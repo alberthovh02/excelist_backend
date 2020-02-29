@@ -77,13 +77,12 @@ router.post("/create", upload.any(), function(req, res, next){
 })
 
 router.delete("/:id", function(req, res, next){
-  console.log("Videoblog delete", req.params)
   Videoblog.findByIdAndRemove(req.params.id,(err, post) => {
     if(err) {
       console.log("Can't delete videoblog error: ", err)
-      return next(err)
+      res.json({message: "Something went wrong", code: 500})
     }
-    res.json({message: "Success", code: 200});
+    res.json({message: "Success", code: 200, data: post});
   })
 })
 
