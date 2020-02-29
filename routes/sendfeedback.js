@@ -25,7 +25,7 @@ router.post("/sendMessage", function(req, res, next) {
 			from: email || "albert.hovhannisyan.main@gmail.com",
 			to: 'albert.hovhannisyan002@gmail.com',
 			subject: title || 'Նոր նամակ կայքից',
-			html: `Անուն Ազգանուն: ${name}<br/>Նամակ: ${message}`
+			html: `Անուն Ազգանուն: ${name}<br/> Էլ.հասցե: ${email}<br/>Նամակ: ${message}`
 		};
 
 		transporter.sendMail(mailOptions, function(error, info) {
