@@ -56,17 +56,17 @@ router.post("/create", upload.single('image'), function(req, res, next){
         console.log("Error when videoblog create ", err)
 				res.json({message: "Something went wrong", code: 500})
 			}else
-			res.json({message: "Success", code: 200});
+			res.json({message: "Success", code: 200, data: post});
 		});
   }
 })
-//
-// router.delete("/:id", function(req, res, next){
-//   console.log(">>>>>>>>>>.", req.body)
-//   Lesson.findByIdAndRemove(req.body._id,(err, post) => {
-//     if(err) return next(err)
-//     res.json(post);
-//   })
-// })
+
+router.delete("/:id", function(req, res, next){
+  console.log(">>>>>>>>>>.", req.params)
+  Course.findByIdAndRemove(req.params.id,(err, post) => {
+    if(err) res.json({message: "Something went wrong", code: 500})
+    else res.json({message: "Success", code: 200, data: post});
+  })
+})
 
 module.exports = router
