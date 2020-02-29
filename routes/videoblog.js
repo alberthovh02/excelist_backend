@@ -51,7 +51,7 @@ router.post("/create", upload.any(), function(req, res, next){
 			language,
 			title,
 			video_link,
-			file_link: req.files[1].path,
+			req.files[1] && {file_link: req.files[1].path},
 			imageUrl: req.files[0].path,
       generatedUrl
 		}
