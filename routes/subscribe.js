@@ -61,29 +61,30 @@ router.post("/sendMail", function(req, res, next){
 			}
 		});
 
-	const subscribers = 	Subscribe.find(function(err, subscriber) {
+		Subscribe.find(function(err, subscriber) {
 			if (err) throw new Error(err);
-			return subscriber
+			console.log("subscriber", subscriber);
+			subscriber.map((item) => {
+				const mailOptions = {
+					from: "albert.hovhannisyan.main@gmail.com",
+					to: item.email,
+					subject: "Excelist new message",
+					html: `<div><p>${text}<p><br/><br/>${link}<div style='display: flex;flex-direction:row;justify-content: space-between'><a href="https://web.facebook.com/Excel.lessons/?fref=ts&_rdc=1&_rdr"><img src=""/></a><a><img/></a><a><img/></a></div></div>`
+				};
+
+				transporter.sendMail(mailOptions, function(error, info) {
+					if (error) {
+						console.log(error);
+						message.error({content: "Error: Message not sent" + error})
+					} else {
+						message.success({content: "Messsage sent"})
+						console.log("Email sent: " + info.response);
+					}
+				});
+			})
 		});
 
-		console.log("Subscribers ", subscribers)
 
-		const mailOptions = {
-			from: "albert.hovhannisyan.main@gmail.com",
-			to: "albert.hovhannisyan002@gmail.com",
-			subject: "Excelist new message",
-			html: `<div><p>${text}<p><br/><br/>${link}<div style='display: flex;flex-direction:row;justify-content: space-between'><a href="https://web.facebook.com/Excel.lessons/?fref=ts&_rdc=1&_rdr"><img src=""/></a><a><img/></a><a><img/></a></div></div>`
-		};
-
-		transporter.sendMail(mailOptions, function(error, info) {
-			if (error) {
-				console.log(error);
-				message.error({content: "Error: Message not sent" + error})
-			} else {
-				message.success({content: "Messsage sent"})
-				console.log("Email sent: " + info.response);
-			}
-		});
 	}
 })
 
