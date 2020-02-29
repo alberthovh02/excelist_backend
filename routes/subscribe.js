@@ -65,6 +65,7 @@ router.post("/sendMail", function(req, res, next){
 			if (err) throw new Error(err);
 			console.log("subscriber", subscriber);
 			subscriber.map((item) => {
+				console.log("ITEM", item.email)
 				const mailOptions = {
 					from: "albert.hovhannisyan.main@gmail.com",
 					to: item.email,
