@@ -65,7 +65,7 @@ router.put('/:id', function(req, res, next){
     (err, feedback) => {
     // Handle any possible database errors
         if (err) return res.status(500).send(err);
-        return res.json({message: "Updated", code: 200});
+        return res.json({message: "Updated", code: 200, data: feedback});
     }
 )
 })
