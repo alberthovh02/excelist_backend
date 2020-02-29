@@ -31,9 +31,9 @@ router.post("/send", function(req, res, next) {
 
 		const mailOptions = {
 			from: "albert.hovhannisyan.main@gmail.com",
-			to: "albert.hovhannisyan002@gmail.com",
-			subject: "Excelist new message",
-			text: "Thank you for subscribing to Excelist newsroom!"
+			to: email,
+			subject: "Excelist ակումբ",
+			text: "Դուք բաժանորդագրվել էք Excelist ակումբի նորություններին, շնորհակալ ենք մեզ վստահելու համար:"
 		};
 
 		transporter.sendMail(mailOptions, function(error, info) {
@@ -61,18 +61,10 @@ router.post("/sendMail", function(req, res, next){
 			}
 		});
 
-		var recipientsArray = []
-
-		function collectUsers(user){
-			recipientsArray.push(user)
-		}
-
 		Subscribe.find(function(err, subscriber) {
 			if (err) throw new Error(err);
-			console.log("subscriber", subscriber);
 			collectUsers(subscriber)
 			subscriber.map((item) => {
-				console.log("ITEM", item.email)
 				const mailOptions = {
 					from: "albert.hovhannisyan.main@gmail.com",
 					to: item.email,
@@ -91,18 +83,6 @@ router.post("/sendMail", function(req, res, next){
 				});
 			})
 		});
-
-console.log("Recipients", recipientsArray);
-
 	}
 })
-
-// router.delete("/:id", function(req, res, next){
-//   console.log(">>>>>>>>>>.", req.body)
-//   Lesson.findByIdAndRemove(req.body._id,(err, post) => {
-//     if(err) return next(err)
-//     res.json(post);
-//   })
-// })
-
 module.exports = router;
