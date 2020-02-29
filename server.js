@@ -18,6 +18,7 @@ const feedbacks = require('./routes/feedbacks');
 const course = require('./routes/course');
 const filerequest = require('./routes/filerequest');
 const imageupload = require('./routes/imageupload');
+const sendfeedback = require('./routes/sendfeedback');
 //Configurations
 const { server, database } = require("./config/config");
 const app = express();
@@ -57,6 +58,7 @@ app.use('/user-feedbacks', feedbacks);
 app.use('/course', course);
 app.use('/filerequest', filerequest);
 app.use('/images', imageupload);
+app.use('/feedback', sendfeedback)
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`App is running in port ${PORT}`))
