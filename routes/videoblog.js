@@ -71,7 +71,7 @@ router.post("/create", upload.any(), function(req, res, next){
         console.log("Error when videoblog create ", err)
 				res.json({message: "Something went wrong", code: 500})
 			}else
-			res.json({message: "Success", code: 200});
+			res.json({message: "Success", code: 200, data: post});
 		});
   }
 })
