@@ -39,8 +39,10 @@ router.post("/send", function(req, res, next) {
 		transporter.sendMail(mailOptions, function(error, info) {
 			if (error) {
 				console.log(error);
+				res.json({code: 400, message: 'something went wrong'}).code(400)
 			} else {
 				console.log("Email sent: " + info.response);
+				res.json({code: 200, message: 'empty data'}).code(200)
 			}
 		});
 	}
@@ -57,6 +59,11 @@ router.post("/sendMail", function(req, res, next){
 				user: "albert.hovhannisyan.main@gmail.com",
 				pass: "alberthovh02"
 			}
+		});
+
+		Subscribe.find(function(err, subscriber) {
+			if (err) throw new Error(err);
+			console.log("subscriber", subscriber);
 		});
 
 		const mailOptions = {
