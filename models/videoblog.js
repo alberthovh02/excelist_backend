@@ -14,8 +14,7 @@ const videoblogSchema = new Schema({
         required: true
     },
     file_link: {
-      type: String,
-      required: true
+      type: String
     },
     language: {
       type: String,

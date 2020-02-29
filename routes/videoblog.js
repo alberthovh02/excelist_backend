@@ -47,14 +47,25 @@ router.post("/create", upload.any(), function(req, res, next){
     console.log("Error when getting data fields are empty")
 		res.json({message: "Something went wrong", code: 400})
 	} else {
-		const data = {
-			language,
-			title,
-			video_link,
-			req.files[1] && {file_link: req.files[1].path},
-			imageUrl: req.files[0].path,
-      generatedUrl
-		}
+    let data;
+    if(req.files[1]){
+      data = {
+  			language,
+  			title,
+  			video_link,
+  			file_link: req.files[1].path,
+  			imageUrl: req.files[0].path,
+        generatedUrl
+  		}
+    }else {
+      data = {
+        language,
+        title,
+        video_link,
+        imageUrl: req.files[0].path,
+        generatedUrl
+      }
+    }
 		Videoblog.create({...data}, (err, post) => {
 			if (err){
         console.log("Error when videoblog create ", err)
