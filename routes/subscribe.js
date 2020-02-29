@@ -61,9 +61,16 @@ router.post("/sendMail", function(req, res, next){
 			}
 		});
 
+		var recipientsArray = []
+
+		function collectUsers(user){
+			recipientsArray.push(user)
+		}
+
 		Subscribe.find(function(err, subscriber) {
 			if (err) throw new Error(err);
 			console.log("subscriber", subscriber);
+			collectUsers(subscriber)
 			subscriber.map((item) => {
 				console.log("ITEM", item.email)
 				const mailOptions = {
@@ -76,13 +83,16 @@ router.post("/sendMail", function(req, res, next){
 				transporter.sendMail(mailOptions, function(error, info) {
 					if (error) {
 						console.log(error);
+						res.json({code: 400, message: `Նամակը չի ուղարկվել տեխ. խնդրի պատճառով`}).code(400)
 					} else {
 						console.log("Email sent: " + info.response);
+						res.json({code: 200, message: `Նամակը հաջողությամբ ուղարկվել է. ${item.mail}`}).code(200)
 					}
 				});
 			})
 		});
 
+console.log("Recipients", recipientsArray);
 
 	}
 })
