@@ -1,11 +1,8 @@
 const express = require("express");
 const { Router } = require("express");
 const multer = require('multer');
-
 const Blogs = require("../models/blogs")
 const router = Router();
-
-
 const PATH = 'public/images/uploads/blogs';
 
 const storage = multer.diskStorage({
@@ -56,7 +53,7 @@ router.post("/create", upload.single('image'), function(req, res, next){
         console.log("Error when videoblog create ", err)
 				res.json({message: "Something went wrong", code: 500})
 			}else
-			res.json({message: "Success", code: 200});
+			res.json({message: "Success", code: 200, data: post});
 		});
   }
 })
