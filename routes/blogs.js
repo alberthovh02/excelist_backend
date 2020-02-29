@@ -60,13 +60,13 @@ router.post("/create", upload.single('image'), function(req, res, next){
 		});
   }
 })
-//
-// router.delete("/:id", function(req, res, next){
-//   console.log(">>>>>>>>>>.", req.body)
-//   Lesson.findByIdAndRemove(req.body._id,(err, post) => {
-//     if(err) return next(err)
-//     res.json(post);
-//   })
-// })
+
+router.delete("/:id", function(req, res, next){
+  console.log(">>>>>>>>>>.", req.body)
+  Blogs.findByIdAndRemove(req.body._id,(err, post) => {
+    if(err) return next(err)
+    res.json(post);
+  })
+})
 
 module.exports = router
