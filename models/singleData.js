@@ -31,7 +31,8 @@ let defaultVal = {
   supporters_count: 0
 }
 
-const def = new singleDataSchema(defaultVal)
+const modelDef  = model('singleData', singleDataSchema)
+const def = new modelDef(defaultVal)
 
 def.create(defaultVal, function(err, data){
   console.log("default values added", data)
