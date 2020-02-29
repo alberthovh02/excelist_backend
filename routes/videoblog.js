@@ -38,7 +38,7 @@ router.get('/video/:videobloglink', function(req, res, next){
   console.log("PArams ", req.params.videobloglink)
 })
 
-router.post("/create", upload.single('image','file_link'), function(req, res, next){
+router.post("/create", upload.any(), function(req, res, next){
   console.log('File', req.files)
   const { language, title, video_link } = req.body;
   const generatedUrl = `${title.trim()}_${language}`;
