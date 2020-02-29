@@ -32,7 +32,6 @@ let defaultVal = {
 }
 
 const modelDef  = model('singleData', singleDataSchema)
-const def = new modelDef(defaultVal)
 
 def.create(defaultVal, function(err, data){
   console.log("default values added", data)
