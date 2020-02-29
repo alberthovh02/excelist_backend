@@ -14,7 +14,8 @@ const router = Router();
 
 router.post("/sendFile", function(req, res, next) {
 	const { name, profecion, email, videoLink } = req.body;
-  console.log("Videolink>>>>", videoLink)
+  console.log("Videolink>>>>", videoLink);
+	console.log('Email', email)
   Videoblog.findOne({title: videoLink},function(err, link) {
   		if (err) throw new Error(err);
   		res.json(link);console.log(link.file_link)
@@ -35,7 +36,7 @@ router.post("/sendFile", function(req, res, next) {
 
 		const mailOptions = {
 			from: "albert.hovhannisyan.main@gmail.com",
-			to: "albert.hovhannisyan002@gmail.com",
+			to: email,
 			subject: "Excelist new message",
 			text: `This is your file http://excelist-backend.herokuapp.com/${link.file_link}`
 		};
