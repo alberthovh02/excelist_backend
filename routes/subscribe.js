@@ -86,7 +86,7 @@ router.post("/sendMail", function(req, res, next){
 						res.json({code: 400, message: `Նամակը չի ուղարկվել տեխ. խնդրի պատճառով`}).code(400)
 					} else {
 						console.log("Email sent: " + info.response);
-						res.json({code: 200, message: `Նամակը հաջողությամբ ուղարկվել է. ${mailOptions.to}`}).code(200)
+						res.json({code: 200, message: `Նամակը հաջողությամբ ուղարկվել է օգտատերերին`}).code(200)
 					}
 				});
 			})
