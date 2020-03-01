@@ -16,6 +16,10 @@ const lessonSchema = new Schema({
     endMinutes: {
       type: String,
       required: true
+    },
+    imageUrl: {
+      type: String,
+      required: true
     }
 })
 

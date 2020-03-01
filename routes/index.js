@@ -51,18 +51,17 @@ router.get("/", function(req, res, next){
 // })
 
 router.post("/create", upload.single('image'), function(req, res, next){
-  const { title, content } = req.body;
-	if (!title || !content) {
+  const { name, endMinutes, endTime } = req.body;
+	if (!name || !endMinutes || !endTime) {
     console.log("Error when getting data fields are empty")
 		res.json({message: "Something went wrong", code: 400})
 	} else {
 		const data = {
-			title,
+			name,
 			imageUrl: req.file.path,
-      content,
-      generatedUrl
+      endTime,
 		}
-		Course.create({...data}, (err, post) => {
+		Lesson.create({...data}, (err, post) => {
 			if (err){
         console.log("Error when videoblog create ", err)
 				res.json({message: "Something went wrong", code: 500})
