@@ -12,7 +12,7 @@ router.get("/", function(req, res, next){
 })
 
 router.post("/create", function(req, res, next){
-  const { name, email, comment, parentId } = req.body;
+  const { name, email, comment, parentId, parentType } = req.body;
 	if (!name || !email || !comment) {
     console.log("Error when getting data fields are empty")
 		res.json({message: "Something went wrong", code: 400})
@@ -21,7 +21,8 @@ router.post("/create", function(req, res, next){
 			name,
       email,
       comment,
-      parentId
+      parentId,
+      parentType
 		}
 		Comments.create({...data}, (err, post) => {
 			if (err){

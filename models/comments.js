@@ -20,6 +20,10 @@ const commentsSchema = new Schema({
     parentId: {
       type: String,
       required: true
+    },
+    parentType: {
+      type: String,
+      required: true
     }
 })
 
