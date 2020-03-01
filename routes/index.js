@@ -1,6 +1,7 @@
 const express = require("express");
 const { Router } = require("express");
-const Lesson = require("../models/lesson")
+const Lesson = require("../models/lesson");
+const multer = require('multer')
 const router = Router();
 
 const PATH = 'public/images/uploads/lessons';
