@@ -60,6 +60,7 @@ router.post("/create", upload.single('image'), function(req, res, next){
 			name,
 			imageUrl: req.file.path,
       endTime,
+      endMinutes
 		}
 		Lesson.create({...data}, (err, post) => {
 			if (err){
