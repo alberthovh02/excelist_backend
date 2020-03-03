@@ -3,7 +3,7 @@ const { Router } = require("express");
 const multer = require('multer');
 const Blogs = require("../models/blogs")
 const router = Router();
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require('cloudinary');
 const PATH = 'public/images/uploads/blogs';
 
 cloudinary.config({
