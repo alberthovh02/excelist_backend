@@ -3,7 +3,7 @@ const { Router } = require("express");
 const multer = require('multer');
 const Blogs = require("../models/blogs")
 const router = Router();
-const cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary').v2;
 const PATH = 'public/images/uploads/blogs';
 
 cloudinary.config({
@@ -41,9 +41,30 @@ router.get("/", function(req, res, next){
   })
 })
 
-router.post("/create", upload.single('image'), function(req, res, next){
-  cloudinary.v2.uploader.upload(req.body.images,
-    function(error, result) {console.log(result, error)});
+router.post("/create", function(req, res, next){
+
+  const upload = multer({storage}).single('image');
+  upload(req, res, function(err){
+    if(err){
+      console.log('Image upload error ', err)
+    }
+
+    const path = req.file.path
+    const uniqueFilename = new Date().toISOString()
+    cloudinary.uploader.upload(
+      path,
+      { public_id: `blog/${uniqueFilename}`, tags: `blog` }, // directory and tags are optional
+      function(err, image) {
+        if (err) return res.send(err)
+        console.log('file uploaded to Cloudinary')
+        // remove file from server
+        const fs = require('fs')
+        fs.unlinkSync(path)
+        // return image details
+        res.json(image)
+      }
+    )
+  })
   const { title, content } = req.body;
   const generatedUrl = `${title.trim()}`;
   console.log("GENERATED URL", generatedUrl);
