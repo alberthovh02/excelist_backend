@@ -60,7 +60,7 @@ router.post("/create", upload.single('image'), async function(req, res, next){
 	} else {
 		const data = {
 			title,
-			imageUrl: req.file.path,
+			imageUrl: resp.url,
       content,
       generatedUrl
 		}
