@@ -50,8 +50,7 @@ router.post("/create", upload.single('image'), function(req, res, next){
       return error
     }
     return result
-  })
-  console.log("IMAGE", resp)
+  }).then(result => console.log(result.json()))
   const generatedUrl = `${title.trim()}`;
   console.log("GENERATED URL", generatedUrl);
 	if (!title || !content) {
