@@ -49,26 +49,7 @@ router.get('/video/:videobloglink', function(req, res, next){
 router.post("/create", function(req, res, next){
 
   const upload = multer({storage}).any();
-  upload(req, res, function(err){
-    if(err){
-      console.log('Image upload error ', err)
-    }
-    const path = req.file.path
-    const uniqueFilename = new Date().toISOString()
-    cloudinary.uploader.upload(
-      path,
-      { public_id: `blog/${uniqueFilename}`, tags: `blog` }, // directory and tags are optional
-      function(err, image) {
-        if (err) return res.send(err)
-        console.log('file uploaded to Cloudinary')
-        // remove file from server
-        const fs = require('fs')
-        fs.unlinkSync(path)
-        // return image details
-        res.json(image)
-      }
-    )
-  })
+
   console.log('File', req.files)
   const { language, title, video_link } = req.body;
   const generatedUrl = `${title.trim()}_${language}`;
@@ -104,6 +85,26 @@ router.post("/create", function(req, res, next){
 			res.json({message: "Success", code: 200, data: post});
 		});
   }
+  upload(req, res, function(err){
+    if(err){
+      console.log('Image upload error ', err)
+    }
+    const path = req.file.path
+    const uniqueFilename = new Date().toISOString()
+    cloudinary.uploader.upload(
+      path,
+      { public_id: `blog/${uniqueFilename}`, tags: `blog` }, // directory and tags are optional
+      function(err, image) {
+        if (err) return res.send(err)
+        console.log('file uploaded to Cloudinary')
+        // remove file from server
+        const fs = require('fs')
+        fs.unlinkSync(path)
+        // return image details
+        res.json(image)
+      }
+    )
+  })
 })
 
 router.delete("/:id", function(req, res, next){
