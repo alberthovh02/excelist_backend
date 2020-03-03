@@ -11,6 +11,7 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const fileName = file.originalname.toLowerCase().split(' ').join('-');
+        console.log('fileee', file)
         cb(null, fileName)
     }
 });
@@ -35,8 +36,7 @@ router.get("/", function(req, res, next){
 })
 
 router.post("/create", upload.single('image'), function(req, res, next){
-  const { title, content, image } = req.body;
-  console.log("IMAGE", image)
+  const { title, content } = req.body;
   const generatedUrl = `${title.trim()}`;
   console.log("GENERATED URL", generatedUrl);
 	if (!title || !content) {
