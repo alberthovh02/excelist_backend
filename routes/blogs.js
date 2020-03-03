@@ -44,9 +44,9 @@ router.get("/", function(req, res, next){
 })
 
 router.post("/create", upload.single('image'), function(req, res, next){
-  const { title, content,  } = req.body;
-  cloudinary.uploader.upload(req.file.path, function(error, result) {console.log(result, error)})
-  console.log("IMAGE", req.file)
+  const { title, content } = req.body;
+  const resp = cloudinary.uploader.upload(req.file.path, function(error, result) {if(error) {return error} return result)})
+  console.log("IMAGE", resp)
   const generatedUrl = `${title.trim()}`;
   console.log("GENERATED URL", generatedUrl);
 	if (!title || !content) {
