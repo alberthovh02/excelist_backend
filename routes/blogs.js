@@ -3,7 +3,14 @@ const { Router } = require("express");
 const multer = require('multer');
 const Blogs = require("../models/blogs")
 const router = Router();
+const cloudinary = require('cloudinary').v2;
 const PATH = 'public/images/uploads/blogs';
+
+cloudinary.config({
+  cloud_name: 'dhlnheh7r',
+  api_key: '448993191284242',
+  api_secret: 'PZ-GzNd9xU6l4kirB7eKBD2F6Fw'
+});
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -35,6 +42,8 @@ router.get("/", function(req, res, next){
 })
 
 router.post("/create", upload.single('image'), function(req, res, next){
+  cloudinary.v2.uploader.upload(req.body.images,
+    function(error, result) {console.log(result, error)});
   const { title, content } = req.body;
   const generatedUrl = `${title.trim()}`;
   console.log("GENERATED URL", generatedUrl);
