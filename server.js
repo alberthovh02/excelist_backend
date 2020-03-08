@@ -34,32 +34,32 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use("/public", express.static(path.join(__dirname, 'public')));
 // app.use(fileUpload())
-app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+// app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
 //Passport Middlewares
-app.use(passport.initialize());
-app.use(passport.session());
-
-const initializePassport = require('./config/passport')
-initializePassport(
-  passport,
-  email => Admin.findOne({},(err, user) => err ? console.log(err) : user)
-)
-
-function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next()
-  }
-
-  res.redirect('/login')
-}
-
-function checkNotAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect('/')
-  }
-  next()
-}
+// app.use(passport.initialize());
+// app.use(passport.session());
+//
+// const initializePassport = require('./config/passport')
+// initializePassport(
+//   passport,
+//   email => Admin.findOne({},(err, user) => err ? console.log(err) : user)
+// )
+//
+// function checkAuthenticated(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     return next()
+//   }
+//
+//   res.redirect('/login')
+// }
+//
+// function checkNotAuthenticated(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     return res.redirect('/')
+//   }
+//   next()
+// }
 
 //Database connection
 mongoose.connect(`mongodb+srv://albert:Admin%23777!@cluster0-8xyhu.mongodb.net/test?retryWrites=true&w=majority`, { useNewUrlParser :"false"});
