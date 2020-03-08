@@ -1,42 +1,34 @@
-const LocalStrategy = require('passport-local').Strategy;
-const mongoose = require('mongoose');
+const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt');
-const passport = require('passport')
-//User models
 const Admin = require('../models/admin');
 
-
-module.exports = function(passport){
-  passport.use(
-    new LocalStrategy({emailField: 'email'}, (email,password , done) => {
-      //Match user
-      Admin.findOne({email: email})
-        .then(user => {
-          if(!user){
-            return done(null, false, {message: 'Email not found'})
-          }
-          //Match password
-          bcrypt.compare(password, user.password, (err, isMatch) => {
-            if(err) throw err;
-            if(isMatch){
-              return done(null, user)
-            }else {
-              return done(null, false, {message: 'Password is incorrect'})
-            }
-          })
-        })
-        .catch(err => console.log(err))
+async function initialize(passport, getUserByEmail, getUserById) {
+  const authenticateUser = async (email, password, done) => {
+    const user = await Admin.findOne({email: email},(err, user) => {
+      console.log(user)
+      return user
     })
-  )
+    if (user == null) {
+      return done(null, false, console.log('No user with that email'))
+    }
 
-  passport.serializeUser((user, done) => {
-    done(null, user.id)
-  });
+    try {
+      console.log("PASSWORD", password);
+      console.log("USER PASS", user.password)
+      await bcrypt.compare(password, user.password, (err, success) => {
+        if(err) return done(null, false, console.log('Password incorrect'))
+        else return done(null, user, console.log("hnjb"));
+      })
+    } catch (e) {
+      return done(e)
+    }
+  }
 
+  passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
+  passport.serializeUser((user, done) => done(null, user._id))
   passport.deserializeUser((id, done) => {
-    Admin.findById(id, (err, user) => {
-      done(err, user)
-    })
+    return done(null, getUserById(id))
   })
-
 }
+
+module.exports = initialize

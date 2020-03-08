@@ -7,7 +7,7 @@ const passport = require('passport');
 
 router.post("/", passport.authenticate('local', { failureRedirect: '/error' }),  function(req, res, next) {
 	// const { email, password } = req.body;
-  res.redirect('/success?username='+req.user.username);
+  console.log('here')
 });
 
 

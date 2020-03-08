@@ -12,4 +12,5 @@ const adminSchema = new Schema({
     },
 })
 
+
 module.exports = model('Admin', adminSchema)
