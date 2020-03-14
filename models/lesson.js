@@ -9,12 +9,8 @@ const lessonSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    endTime :{
+    date: {
       type: Date,
-      required: true
-    },
-    endMinutes: {
-      type: String,
       required: true
     },
     imageUrl: {

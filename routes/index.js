@@ -51,7 +51,7 @@ router.get("/", function(req, res, next){
 // })
 
 router.post("/create", upload.single('image'), function(req, res, next){
-  const { name, endMinutes, endTime } = req.body;
+  const { name, date } = req.body;
 	if (!name || !endMinutes || !endTime) {
     console.log("Error when getting data fields are empty")
 		res.json({message: "Something went wrong", code: 400})
@@ -59,8 +59,7 @@ router.post("/create", upload.single('image'), function(req, res, next){
 		const data = {
 			name,
 			imageUrl: req.file.path,
-      endTime,
-      endMinutes
+      date
 		}
 		Lesson.create({...data}, (err, post) => {
 			if (err){
