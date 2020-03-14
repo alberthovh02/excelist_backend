@@ -52,7 +52,7 @@ router.get("/", function(req, res, next){
 
 router.post("/create", upload.single('image'), function(req, res, next){
   const { name, date } = req.body;
-	if (!name || !endMinutes || !endTime) {
+	if (!name || !date) {
     console.log("Error when getting data fields are empty")
 		res.json({message: "Something went wrong", code: 400})
 	} else {
