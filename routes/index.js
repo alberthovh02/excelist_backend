@@ -75,7 +75,7 @@ router.delete("/:id", function(req, res, next){
   console.log(">>>>>>>>>>.", req.params.id)
   Lesson.findByIdAndRemove(req.params.id,(err, post) => {
     if(err) return next(err)
-    res.json(post);
+    res.json({code: 200, data: {post}, message: "Successfully deleted"});
   })
 })
 
