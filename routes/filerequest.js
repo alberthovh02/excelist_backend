@@ -2,15 +2,7 @@ const express = require("express");
 const {Router} = require("express");
 const Videoblog = require("../models/videoblog");
 const nodemailer = require("nodemailer");
-
 const router = Router();
-
-// router.get("/", function(req, res, next) {
-// 	SingleData.find(function(err, lesson) {
-// 		if (err) throw new Error(err);
-// 		res.json(lesson);
-// 	});
-// });
 
 router.post("/sendFile", function(req, res, next) {
 	const { name, profecion, email, videoLink } = req.body;
@@ -38,7 +30,6 @@ router.post("/sendFile", function(req, res, next) {
 			from: "albert.hovhannisyan.main@gmail.com",
 			to: email,
 			subject: "Excelist new message",
-			text: `This is your file http://excelist-backend.herokuapp.com/${link.file_link}`,
 			html: `Ահա Ձեր հարցված ֆայլը: http://excelist-backend.herokuapp.com/${link.file_link}<br/><div style="color: #0356fc, font-size: 18px">Շնորհակալություն որ հետևում եք մեր ալիքին:<br/><br/>Հարգանքով «Էքսելիստ» ՍՊԸ:<br/><b>Հասցե</b> ք.Երևան Արշակունյաց 2,«Տիգրան Մեծ» հրատ. շենք, 3-րդ հարկ,<br/> <b>Հեռ</b> +374 55 50 57 57,<br/> <b>Կայք</b> www.excelist.am<br/> <b>Ֆեյսբուք</b> www.fb.com/excel.lessons:</div>`
 		};
 
@@ -53,13 +44,5 @@ router.post("/sendFile", function(req, res, next) {
 	}
   });
 });
-
-// router.delete("/:id", function(req, res, next){
-//   console.log(">>>>>>>>>>.", req.body)
-//   Lesson.findByIdAndRemove(req.body._id,(err, post) => {
-//     if(err) return next(err)
-//     res.json(post);
-//   })
-// })
 
 module.exports = router;

@@ -7,7 +7,8 @@ const path = require("path")
 var router = express.Router();
 const session = require('express-session');
 const passport = require('passport');
-// const Admin = require('./models/admin')
+// const Admin = require('./models/admin');
+const authData = require('./helpers/auth');
 
 //Routes
 const lessonRoute = require("./routes/index");
@@ -62,8 +63,8 @@ app.use("/public", express.static(path.join(__dirname, 'public')));
 // }
 
 //Database connection
-mongoose.connect(`mongodb+srv://albert:Admin%23777!@cluster0-8xyhu.mongodb.net/test?retryWrites=true&w=majority`, { useNewUrlParser :"false"});
-
+// mongoose.connect(`mongodb+srv://albert:Admin%23777!@cluster0-8xyhu.mongodb.net/test?retryWrites=true&w=majority`, { useNewUrlParser :"false"});
+mongoose.connect('mongodb://localhost:27017/excelist')
 //Handle database connection error
 mongoose.connection.on("error",(err)=>{
     console.log("err",err);
@@ -74,7 +75,7 @@ mongoose.connection.on("connected",(err,res) => {
     console.log("mongoose is connected");
 });
 
-// app.use("/login/admin", authRoute);
+app.use("/login", authRoute);
 // app.use("/",router)
 app.use("/lesson", lessonRoute)
 app.use("/get-files", subscribe);
