@@ -72,8 +72,8 @@ router.post("/create", upload.single('image'), function(req, res, next){
 })
 
 router.delete("/:id", function(req, res, next){
-  console.log(">>>>>>>>>>.", req.params._id)
-  Lesson.findByIdAndRemove(req.params._id,(err, post) => {
+  console.log(">>>>>>>>>>.", req.params.id)
+  Lesson.findByIdAndRemove(req.params.id,(err, post) => {
     if(err) return next(err)
     res.json(post);
   })
