@@ -16,9 +16,9 @@ cloudinary.config({
 });
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, PATH);
-    },
+    // destination: (req, file, cb) => {
+    //     cb(null, PATH);
+    // },
     filename: (req, file, cb) => {
         const fileName = file.originalname.toLowerCase().split(' ').join('-');
         cb(null, fileName)
