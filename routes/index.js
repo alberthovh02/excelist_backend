@@ -4,6 +4,17 @@ const Lesson = require("../models/lesson");
 const multer = require('multer')
 const router = Router();
 
+var cloudinary = require('cloudinary').v2;
+const verifyToken = require('../helpers/auth');
+const jwt = require('jsonwebtoken');
+
+cloudinary.config({
+  cloud_name: 'dhlnheh7r',
+  api_key: '448993191284242',
+  api_secret: 'PZ-GzNd9xU6l4kirB7eKBD2F6Fw'
+});
+
+
 const PATH = 'public/images/uploads/lessons';
 
 const storage = multer.diskStorage({
@@ -50,25 +61,39 @@ router.get("/", function(req, res, next){
 // }
 // })
 
-router.post("/create", upload.single('image'), function(req, res, next){
-  const { name, date } = req.body;
-	if (!name || !date) {
-    console.log("Error when getting data fields are empty")
-		res.json({message: "Something went wrong", code: 400})
-	} else {
-		const data = {
-			name,
-			imageUrl: req.file.path,
-      date
-		}
-		Lesson.create({...data}, (err, post) => {
-			if (err){
-        console.log("Error when videoblog create ", err)
-				res.json({message: "Something went wrong", code: 500})
-			}else
-			res.json({message: "Success", code: 200, data: post});
-		});
-  }
+router.post("/create", verifyToken ,upload.single('image') , function(req, res, next){
+
+  jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
+    if(!err){
+      const resp = await cloudinary.uploader.upload(req.file.path, function(error, result){
+        if(error){
+          return error
+        }
+        return result
+      })
+      const { name, date } = req.body;
+      if (!name || !date) {
+        console.log("Error when getting data fields are empty")
+        res.json({message: "Something went wrong", code: 400})
+      } else {
+        const data = {
+          name,
+          imageUrl: resp.url,
+          date
+        }
+        Lesson.create({...data}, (err, post) => {
+          if (err){
+            console.log("Error when videoblog create ", err)
+            res.json({message: "Something went wrong", code: 500})
+          }else
+          res.json({message: "Success", code: 200, data: post});
+        });
+      }
+      }else res.json({code: 401, message: "Access denied"})
+  })
+
+
+
 })
 
 router.delete("/:id", function(req, res, next){
