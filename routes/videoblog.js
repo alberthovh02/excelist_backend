@@ -53,7 +53,7 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
     if(!err){
 
-      const resp = await cloudinary.uploader.upload(req.files[0].path,{ resource_type: "auto" }, function(error, result){
+      const resp = await cloudinary.uploader.upload(req.files[0].path,{ public_id": "sample_spreadsheet.xlsx",resource_type: "auto" }, function(error, result){
         if(error){
           return error
         }
