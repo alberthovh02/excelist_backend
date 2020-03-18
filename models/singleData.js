@@ -23,18 +23,5 @@ const singleDataSchema = new Schema({
     }
 })
 
-let defaultVal = {
-  students_count: 0,
-  lessons_count: 0,
-  teachers_count: 0,
-  members_count: 0,
-  supporters_count: 0
-}
-
-const modelDef  = model('singleData', singleDataSchema)
-
-modelDef.create(defaultVal, function(err, data){
-  console.log("default values added", data)
-})
 
 module.exports = model('singleData', singleDataSchema)
