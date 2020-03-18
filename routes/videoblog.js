@@ -52,7 +52,7 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
 
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
     if(!err){
-
+    const { language, title, video_link } = req.body;
       const resp = await cloudinary.uploader.upload(req.files[0].path,{ public_id: `${title}.xlsx`,resource_type: "auto" }, function(error, result){
         if(error){
           return error
@@ -67,7 +67,7 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
         return result
       })
 
-      const { language, title, video_link } = req.body;
+
       const generatedUrl = `${title.trim()}_${language}`;
       console.log("GENERATED URL", generatedUrl);
       if (!language || !title || !video_link) {
