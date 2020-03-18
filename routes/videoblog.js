@@ -55,14 +55,14 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
     const { language, title, video_link } = req.body;
       const generatedUrl = `${title.trim()}_${language}`;
       console.log(req.files[1])
-      const resp = await cloudinary.uploader.upload(req.files[0].path,{ public_id: `${generatedUrl}.xlsx`,resource_type: "auto" }, function(error, result){
+      const resp = await cloudinary.uploader.upload(req.files[0].path, function(error, result){
         if(error){
           return error
         }
         return result
       })
 
-      const respFile = await cloudinary.uploader.upload(req.files[1].path, function(error, result){
+      const respFile = await cloudinary.uploader.upload(req.files[1].path, { public_id: req.files[1].originalname,resource_type: "auto" }, function(error, result){
         if(error){
           return error
         }
@@ -82,8 +82,8 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
             language,
             title,
             video_link,
-            file_link: resp.url,
-            imageUrl: respFile.url,
+            file_link: respFile.url,
+            imageUrl: resp.url,
             generatedUrl
           }
         }else {
