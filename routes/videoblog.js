@@ -93,7 +93,7 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
             language,
             title,
             video_link,
-            imageUrl: respFile.url,
+            imageUrl: resp.url,
             generatedUrl
           }
         }
