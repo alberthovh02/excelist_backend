@@ -61,13 +61,15 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
         }
         return result
       })
+      if(req.files[1]){
+        var respFile = await cloudinary.uploader.upload(req.files[1].path, { public_id: req.files[1].originalname,resource_type: "auto" }, function(error, result){
+          if(error){
+            return error
+          }
+          return result
+        })
+      }
 
-      const respFile = await cloudinary.uploader.upload(req.files[1].path, { public_id: req.files[1].originalname,resource_type: "auto" }, function(error, result){
-        if(error){
-          return error
-        }
-        return result
-      })
 
 
 
