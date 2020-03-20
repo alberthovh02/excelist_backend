@@ -46,12 +46,13 @@ router.get("/", function(req, res, next){
   })
 })
 
-router.post("/create", verifyToken ,upload.single('image'),  async function(req, res, next){
+router.post("/create", verifyToken ,upload.any(),  async function(req, res, next){
   const { title, content } = req.body;
   const generatedUrl = `${title.trim()}`;
 
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
     if(!err){
+      console.log('Course ', req.files)
       const resp = await cloudinary.uploader.upload(req.file.path, function(error, result){
         if(error){
           return error
