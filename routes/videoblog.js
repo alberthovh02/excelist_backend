@@ -53,6 +53,7 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
     if(!err){
     const { language, title, video_link } = req.body;
+      const changedVideolink = video_link.replace('watch?v=', 'embed/')
       const generatedUrl = `${title.trim()}_${language}`;
       console.log(req.files[1])
       const resp = await cloudinary.uploader.upload(req.files[0].path, function(error, result){
@@ -83,7 +84,7 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
           data = {
             language,
             title,
-            video_link,
+            video_link: changedVideolink,
             file_link: respFile.url,
             imageUrl: resp.url,
             generatedUrl
@@ -92,7 +93,7 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
           data = {
             language,
             title,
-            video_link,
+            video_link: changedVideolink,
             imageUrl: resp.url,
             generatedUrl
           }
