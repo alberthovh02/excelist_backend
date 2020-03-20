@@ -73,7 +73,7 @@ router.post("/create", verifyToken ,upload.any(),  async function(req, res, next
     		const data = {
     			title,
           imageUrl: resp.url,
-          caption: respCaption.url,
+          captionUrl: respCaption.url,
           content,
           generatedUrl
     		}
