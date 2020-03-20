@@ -16,6 +16,10 @@ const CourseSchema = new Schema({
     content: {
       type: String,
       required: true
+    },
+    captionUrl: {
+      type: String,
+      required: true
     }
 })
 

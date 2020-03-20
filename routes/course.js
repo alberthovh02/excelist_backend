@@ -53,19 +53,27 @@ router.post("/create", verifyToken ,upload.any(),  async function(req, res, next
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
     if(!err){
       console.log('Course ', req.files)
-      const resp = await cloudinary.uploader.upload(req.file.path, function(error, result){
+      const resp = await cloudinary.uploader.upload(req.files[0].path, function(error, result){
         if(error){
           return error
         }
         return result
       })
+      const respCaption = await cloudinary.uploader.upload(req.files[1].path, function(error, result){
+        if(error){
+          return error
+        }
+        return result
+      })
+
       if (!title || !content) {
         console.log("Error when getting data fields are empty")
     		res.json({message: "Something went wrong", code: 400})
     	} else {
     		const data = {
     			title,
-    			imageUrl: resp.url,
+          imageUrl: resp.url,
+          caption: respCaption.url,
           content,
           generatedUrl
     		}
