@@ -29,7 +29,7 @@ const videoblogSchema = new Schema({
       required: true
     },
     isEmpty: {
-      type: Boolean.
+      type: Boolean,
       default: false 
     }
 })
