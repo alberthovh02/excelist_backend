@@ -156,7 +156,8 @@ router.put("/:id",  verifyToken ,upload.any(), function(req, res, next){
         }if(req.files[0]) {
          data.imageUrl = resp.url
         }
-        Videoblog.findOneAndUpdate({_id: req.params.id},{...data}, (err, post) => {
+        console.log("VIDEOBLOG ID ", req.params.id)
+        Videoblog.findOneAndUpdate({_id: req.params.id},{...data},{new: true}, (err, post) => {
           if (err){
             console.log("Error when videoblog create ", err)
             res.json({message: "Something went wrong", code: 500})
