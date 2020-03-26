@@ -51,7 +51,7 @@ router.post("/",upload.single('file'), function(req, res, next) {
 			html: `There are new cv waiting for review`,
 			attachments: [{
 				filename: 'CV file',
-				content: file
+				content: req.file
 			}]
 		};
 
