@@ -114,15 +114,15 @@ router.put("/:id",  verifyToken ,upload.any(), function(req, res, next){
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
     if(!err){
     const { language, title, video_link, isEmpty } = req.body;
-      const changedVideolink = video_link.replace('watch?v=', 'embed/')
-      const generatedUrl = `${title.trim()}_${language}`;
+      const changedVideolink = video_link ? video_link.replace('watch?v=', 'embed/') : null
+      const generatedUrl = title ? `${title.trim()}_${language}` : null ;
       console.log(req.files[1])
-      const resp = await cloudinary.uploader.upload(req.files[0].path, function(error, result){
+      const resp = req.files[0] ? await cloudinary.uploader.upload(req.files[0].path, function(error, result){
         if(error){
           return error
         }
         return result
-      })
+      }) : null
       if(req.files[1]){
         var respFile = await cloudinary.uploader.upload(req.files[1].path, { public_id: req.files[1].originalname,resource_type: "auto" }, function(error, result){
           if(error){
@@ -133,29 +133,25 @@ router.put("/:id",  verifyToken ,upload.any(), function(req, res, next){
       }
 
       console.log("GENERATED URL", generatedUrl);
-      if (!language || !title || !video_link) {
-        console.log("Error when getting data fields are empty")
-        res.json({message: "Something went wrong", code: 400})
-      } else {
-        let data;
+        let data = {};
+        if(language){
+          data.language = language
+        }
+        if(title){
+          data.title = title;
+          data.generatedUrl = generatedUrl;
+        }
+        if(video_link){
+          data.video_link = changedVideolink
+        }
+        if(isEmpty){
+          data.isEmpty = isEmpty
+        }
         if(req.files[1]){
-          data = {
-            language,
-            title,
-            video_link: changedVideolink,
-            file_link: respFile.url,
-            imageUrl: resp.url,
-            generatedUrl
-          }
+          data.file_link = respFile.url;
+          data.imageUrl = resp.url;
         }else {
-          data = {
-            language,
-            title,
-            video_link: changedVideolink,
-            imageUrl: resp.url,
-            generatedUrl,
-            isEmpty
-          }
+         data.imageUrl = resp.url
         }
         Videoblog.findOneAndUpdate({_id: req.params.id},{...data}, (err, post) => {
           if (err){
@@ -164,7 +160,6 @@ router.put("/:id",  verifyToken ,upload.any(), function(req, res, next){
           }else
           res.json({message: "Success", code: 200, data: post});
         });
-      }
       }else res.json({code: 401, message: "Access denied"})
   })
 
