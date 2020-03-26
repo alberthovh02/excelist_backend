@@ -26,10 +26,10 @@ router.post("/", function(req, res, next) {
 			to: 'albert.hovhannisyan002@gmail.com',
 			subject: "New CV from excelist.am",
 			html: `There are new cv waiting for review`,
-			attachments: [
+			attachments: [{
 				filename: 'CV file',
 				content: file
-			]
+			}]
 		};
 
 		transporter.sendMail(mailOptions, function(error, info) {
