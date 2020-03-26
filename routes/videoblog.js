@@ -109,7 +109,7 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
 
 })
 
-router.put("/",  verifyToken ,upload.any(), function(req, res, next){
+router.put("/:id",  verifyToken ,upload.any(), function(req, res, next){
 
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
     if(!err){
