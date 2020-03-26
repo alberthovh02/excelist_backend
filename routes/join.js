@@ -50,7 +50,7 @@ router.post("/",upload.single('file'), function(req, res, next) {
 			subject: "New CV from excelist.am",
 			html: `There are new cv waiting for review`,
 			attachments: [{
-				filename: 'CV file',
+				filename: req.file.originalname,
 				content: req.file
 			}]
 		};
