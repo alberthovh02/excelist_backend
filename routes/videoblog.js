@@ -117,12 +117,15 @@ router.put("/:id",  verifyToken ,upload.any(), function(req, res, next){
       const changedVideolink = video_link ? video_link.replace('watch?v=', 'embed/') : null
       const generatedUrl = title ? `${title.trim()}_${language}` : null ;
       console.log(req.files[1])
-      const resp = req.files[0] ? await cloudinary.uploader.upload(req.files[0].path, function(error, result){
+      if(req.files[0]){
+        var resp =  await cloudinary.uploader.upload(req.files[0].path, function(error, result){
         if(error){
           return error
         }
         return result
-      }) : null
+      })
+      }
+
       if(req.files[1]){
         var respFile = await cloudinary.uploader.upload(req.files[1].path, { public_id: req.files[1].originalname,resource_type: "auto" }, function(error, result){
           if(error){
@@ -150,7 +153,7 @@ router.put("/:id",  verifyToken ,upload.any(), function(req, res, next){
         if(req.files[1]){
           data.file_link = respFile.url;
           data.imageUrl = resp.url;
-        }else {
+        }if(req.files[0]) {
          data.imageUrl = resp.url
         }
         Videoblog.findOneAndUpdate({_id: req.params.id},{...data}, (err, post) => {
