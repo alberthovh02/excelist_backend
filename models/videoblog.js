@@ -27,6 +27,10 @@ const videoblogSchema = new Schema({
     generatedUrl: {
       type: String,
       required: true
+    },
+    isEmpty: {
+      type: Boolean.
+      default: false 
     }
 })
 

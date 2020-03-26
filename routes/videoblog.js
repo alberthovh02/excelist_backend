@@ -52,7 +52,7 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
 
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
     if(!err){
-    const { language, title, video_link } = req.body;
+    const { language, title, video_link, isEmpty } = req.body;
       const changedVideolink = video_link.replace('watch?v=', 'embed/')
       const generatedUrl = `${title.trim()}_${language}`;
       console.log(req.files[1])
@@ -95,7 +95,8 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
             title,
             video_link: changedVideolink,
             imageUrl: resp.url,
-            generatedUrl
+            generatedUrl,
+            isEmpty
           }
         }
         Videoblog.create({...data}, (err, post) => {
