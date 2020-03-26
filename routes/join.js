@@ -30,7 +30,7 @@ router.post("/",upload.single('file'), function(req, res, next) {
 	const { file } = req.body;
 	console.log('File upload', req.file)
 
-	if (!file) {
+	if (!req.file) {
     res.json({code: 400, message: 'empty data'})
 		next();
 	} else {
