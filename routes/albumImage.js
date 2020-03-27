@@ -56,8 +56,8 @@ router.post("/create/:id", verifyToken ,upload.single('image'),  async function(
         return result
       })
       console.log('resp', resp)
-
-    		Albums.findByIdAndUpdate(req.params.id,{ $push: { images: {id: req.params.id,resp.url} } } ,(err, post) => {
+      const url = resp.url
+    		Albums.findByIdAndUpdate(req.params.id,{ $push: { images: {id: req.params.id, url} } } ,(err, post) => {
     			if (err){
             console.log("Error when videoblog create ", err)
     				res.json({message: "Something went wrong", code: 500})
