@@ -88,7 +88,7 @@ router.put('/:id', function(req, res, next){
   })
 })
 
-router.delete("/:id", function(req, res, next){
+router.delete("/:albumId/:imageId", function(req, res, next){
   console.log(">>>>>>>>>>.", req.params)
   Albums.findByIdAndRemove(req.params.id,(err, post) => {
     if(err) res.json({message: "Something went wrong", code: 500});
