@@ -93,6 +93,7 @@ router.post("/sendMail",upload.single('image'), async function(req, res, next){
 		Subscribe.find(function(err, subscriber) {
 			if (err) throw new Error(err);
 			// collectUsers(subscriber)
+			console.log('resp url', resp.url)
 			subscriber.map((item) => {
 				const mailOptions = {
 					from: "albert.hovhannisyan.main@gmail.com",
