@@ -93,7 +93,7 @@ router.post("/sendMail",upload.single('image'), async function(req, res, next){
 		Subscribe.find(function(err, subscriber) {
 			if (err) throw new Error(err);
 			// collectUsers(subscriber)
-			console.log('resp url', resp.url)
+			console.log('resp url>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', resp.url)
 			subscriber.map((item) => {
 				const mailOptions = {
 					from: "albert.hovhannisyan.main@gmail.com",
@@ -105,10 +105,10 @@ router.post("/sendMail",upload.single('image'), async function(req, res, next){
 				transporter.sendMail(mailOptions, function(error, info) {
 					if (error) {
 						console.log(error);
-						res.json({code: 400, message: `Նամակը չի ուղարկվել տեխ. խնդրի պատճառով`}).code(400)
+						res.json({code: 400, message: `Նամակը չի ուղարկվել տեխ. խնդրի պատճառով`})
 					} else {
 						console.log("Email sent: " + info.response);
-						res.json({code: 200, message: `Նամակը հաջողությամբ ուղարկվել է օգտատերերին`}).code(200)
+						res.json({code: 200, message: `Նամակը հաջողությամբ ուղարկվել է օգտատերերին`})
 					}
 				});
 			})
