@@ -68,10 +68,7 @@ router.post("/create",  verifyToken ,upload.single('image') ,function(req, res, 
 });
 
 router.put('/:id', function(req, res, next){
-  router.use(express.urlencoded({ extended: true }));
-
-  // for parsing multipart/form-data
-  router.use(upload.array());
+ 
   console.log("iddd ", req.params.id, req.body)
   Feedbacks.findByIdAndUpdate(
     req.params.id,
