@@ -2,7 +2,28 @@ const express = require("express");
 const {Router} = require("express");
 const Subscribe = require("../models/subscribe");
 const nodemailer = require("nodemailer");
+const multer = require('multer')
 const router = Router();
+
+cloudinary.config({
+  cloud_name: 'dhlnheh7r',
+  api_key: '448993191284242',
+  api_secret: 'PZ-GzNd9xU6l4kirB7eKBD2F6Fw'
+});
+
+const PATH = 'public/images/uploads/albums/image';
+
+const storage = multer.diskStorage({
+
+    filename: (req, file, cb) => {
+        const fileName = file.originalname.toLowerCase().split(' ').join('-');
+        cb(null, fileName)
+    }
+});
+
+const upload = multer({
+    storage: storage,
+});
 
 router.get("/", function(req, res, next) {
 	Subscribe.find(function(err, lesson) {
@@ -48,11 +69,17 @@ router.post("/send", function(req, res, next) {
 	}
 });
 
-router.post("/sendMail", function(req, res, next){
+router.post("/sendMail",upload.single('image'), function(req, res, next){
 	const { text, link, data } = req.body;
 	if(!text || !link) {
 		res.json({message: "Empty data", code: 400})
 	}else{
+		 const resp = await cloudinary.uploader.upload(req.file.path, function(error, result){
+        if(error){
+          return error
+        }
+        return result
+      })
 		const transporter = nodemailer.createTransport({
 			service: "gmail",
 			auth: {
@@ -69,7 +96,7 @@ router.post("/sendMail", function(req, res, next){
 					from: "albert.hovhannisyan.main@gmail.com",
 					to: item.email,
 					subject: "Excelist new message",
-					html: `<div><p>${text}<p><br/><br/>${link}<div style='display: flex;flex-direction:row;justify-content: space-between'><a href="https://web.facebook.com/Excel.lessons/?fref=ts&_rdc=1&_rdr"><img src=""/></a><a><img/></a><a><img/></a></div></div>`
+					html: `<div><p>${text}<p><br/><br/>${link}<div style='display: flex;flex-direction:row;justify-content: space-between'><a href="https://web.facebook.com/Excel.lessons/?fref=ts&_rdc=1&_rdr"><img src={resp.url}/></a><a><img/></a><a><img/></a></div></div>`
 				};
 
 				transporter.sendMail(mailOptions, function(error, info) {

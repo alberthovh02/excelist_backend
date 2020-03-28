@@ -16,9 +16,7 @@ cloudinary.config({
 const PATH = 'public/images/uploads/albums/image';
 
 const storage = multer.diskStorage({
-    // destination: (req, file, cb) => {
-    //     cb(null, PATH);
-    // },
+
     filename: (req, file, cb) => {
         const fileName = file.originalname.toLowerCase().split(' ').join('-');
         cb(null, fileName)
@@ -27,14 +25,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage: storage,
-    // fileFilter: (req, file, cb) => {
-    //     if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
-    //         cb(null, true);
-    //     } else {
-    //         cb(null, false);
-    //         return cb(new Error('Allowed only .png, .jpg, .jpeg and .gif'));
-    //     }
-    // }
 });
 
 // router.get("/" ,function(req, res, next){
