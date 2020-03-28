@@ -12,19 +12,17 @@ router.get("/", function(req, res, next) {
 
 router.post("/count", function(req, res, next) {
 	const { students_count, lessons_count, teachers_count, members_count, supporters_count } = req.body;
-		SingleData.findOneAndUpdate({}, {students_count, lessons_count, teachers_count, members_count, supporters_count}, {new: true, upsert: true}, (err, post) => {
+		let data = {}
+		if(students_count) data.students_count = students_count;
+		if(lessons_count) data.lessons_count = lessons_count;
+		if(teachers_count) data.teachers_count = teachers_count;
+		if(members_count) data.members_count = members_count;
+		if(supporters_count) data.supporters_count = supporters_count
+		SingleData.findOneAndUpdate({}, data , {new: true, upsert: true}, (err, post) => {
 			if (err) console.log(err);
 			console.log("post", post)
 			res.json({message: "Success", code: 200, data: post});
 		});
 });
-
-// router.delete("/:id", function(req, res, next){
-//   console.log(">>>>>>>>>>.", req.body)
-//   Lesson.findByIdAndRemove(req.body._id,(err, post) => {
-//     if(err) return next(err)
-//     res.json(post);
-//   })
-// })
 
 module.exports = router;
