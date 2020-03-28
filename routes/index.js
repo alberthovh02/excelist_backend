@@ -46,32 +46,19 @@ router.get("/", function(req, res, next){
   })
 })
 
-// router.post("/create", function(req, res, next){
-//   const { name, endTime, endMinutes, image } = req.body;
-//   console.log(name, endTime, endMinutes, image)
-//   console.log('req body>>>>>>>>>', req.body)
-//   if(!name || !endTime || !endMinutes || !image){
-//     res.json({message: "Empty data", code: 400})
-//     next()
-//   }else{
-//   Lesson.create(req.body, (err, post) => {
-//     if(err) throw new Error(err);
-//     res.json({message: "Success", code: 200})
-//   })
-// }
-// })
-
 router.put('/update/:id', function(req, res, next){
   const { id } = req.params;
   const { name, date } = req.body;
   let data = {}
   if(name) data.name = name;
   if(date) data.date = date;
+  console.log(req.params.id)
   Lesson.findByIdAndUpdate(req.params.id, {data}, {new: true}, (err, result) => {
     if(err){
       console.log("Can't update lesson");
       res.json({code: 500, message: "Can't update lesson"})
     }else{
+      console.log("Result >>>>>>>>>>>", result)
       res.json({message: "Updated", code: 200, data: result})
     }
   })
