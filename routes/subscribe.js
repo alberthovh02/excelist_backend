@@ -69,7 +69,7 @@ router.post("/send", function(req, res, next) {
 	}
 });
 
-router.post("/sendMail",upload.single('image'), function(req, res, next){
+router.post("/sendMail",upload.single('image'), async function(req, res, next){
 	const { text, link, data } = req.body;
 	if(!text || !link) {
 		res.json({message: "Empty data", code: 400})
