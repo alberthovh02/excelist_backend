@@ -2,6 +2,8 @@ const express = require("express");
 const {Router} = require("express");
 const Subscribe = require("../models/subscribe");
 const nodemailer = require("nodemailer");
+var cloudinary = require('cloudinary').v2;
+
 const multer = require('multer')
 const router = Router();
 
