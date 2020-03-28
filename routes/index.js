@@ -61,6 +61,22 @@ router.get("/", function(req, res, next){
 // }
 // })
 
+router.put('/update/:id', function(req, res, next){
+  const { id } = req.params;
+  const { name, date } = req.body;
+  let data = {}
+  if(name) data.name = name;
+  if(date) data.date = date;
+  Lesson.findOneAndUpdate({_id: id}, data, {new: true}, (err, result) => {
+    if(err){
+      console.log("Can't update lesson");
+      res.json({code: 500, message: "Can't update lesson"})
+    }else{
+      res.json({message: "Updated", code: 200, data: result})
+    }
+  })
+})
+
 router.post("/create", verifyToken ,upload.single('image') , function(req, res, next){
 
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
