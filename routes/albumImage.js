@@ -63,7 +63,8 @@ router.post("/create/:id", verifyToken ,upload.single('image'),  async function(
 
 router.delete("/delete/:albumId/:imageId", function(req, res, next){
   console.log(">>>>>>>>>>.", req.params)
-  Albums.findOneAndRemove({_id: req.params.albumId}, {$pull: {"images": {id: req.params.imageId}}} ,(err, post) => {
+  Albums.findOneById(req.params.albumId)
+  Albums.update({_id: req.params.albumId}, {"$pull": {"images": {"id": req.params.imageId}}}, {safe: true, multi: true} ,(err, post) => {
     if(err) res.json({message: "Something went wrong", code: 500});
     else res.json({message: "Success", code: 200, data: post});
   })
