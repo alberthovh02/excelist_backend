@@ -99,7 +99,7 @@ router.post("/sendMail",upload.single('image'), async function(req, res, next){
 					from: "albert.hovhannisyan.main@gmail.com",
 					to: item.email,
 					subject: "Excelist new message",
-					html: `<div><p>${text}<p><br/><br/>${link}<div style='display: flex;flex-direction:row;justify-content: space-between'><a href="https://web.facebook.com/Excel.lessons/?fref=ts&_rdc=1&_rdr"><img src='${resp.url}'/></a><a><img/></a><a><img/></a></div></div>`
+					html: `<div><p>${text}<p><br/><div style='display: flex;flex-direction:row;justify-content: space-between'><a href="${link}"><img src='${resp.url}'/></a><a><img/></a><a><img/></a></div></div>`
 				};
 
 				transporter.sendMail(mailOptions, function(error, info) {
