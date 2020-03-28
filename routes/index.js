@@ -52,8 +52,9 @@ router.put('/update/:id', function(req, res, next){
   let data = {}
   if(name) data.name = name;
   if(date) data.date = date;
-  console.log(req.params.id)
-  Lesson.findByIdAndUpdate(req.params.id, {data}, {new: true}, (err, result) => {
+  console.log(req.body.name)
+  console.log("data ", data)
+  Lesson.findByIdAndUpdate(req.params.id, data, {new: true}, (err, result) => {
     if(err){
       console.log("Can't update lesson");
       res.json({code: 500, message: "Can't update lesson"})
