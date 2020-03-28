@@ -20,6 +20,10 @@ const singleDataSchema = new Schema({
     supporters_count: {
       type: Number,
       default: 0
+    },
+    facebook_followers: {
+      type: Number,
+      default: 0
     }
 })
 
