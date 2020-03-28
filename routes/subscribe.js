@@ -72,7 +72,7 @@ router.post("/send", function(req, res, next) {
 });
 
 router.post("/sendMail",upload.single('image'), async function(req, res, next){
-	const { text, link, data } = req.body;
+	const { text, link } = req.body;
 	if(!text || !link) {
 		res.json({message: "Empty data", code: 400})
 	}else{
@@ -92,7 +92,7 @@ router.post("/sendMail",upload.single('image'), async function(req, res, next){
 
 		Subscribe.find(function(err, subscriber) {
 			if (err) throw new Error(err);
-			collectUsers(subscriber)
+			// collectUsers(subscriber)
 			subscriber.map((item) => {
 				const mailOptions = {
 					from: "albert.hovhannisyan.main@gmail.com",
