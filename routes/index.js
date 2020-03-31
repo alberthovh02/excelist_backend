@@ -1,32 +1,32 @@
 const express = require("express");
 const { Router } = require("express");
 const Lesson = require("../models/lesson");
-const multer = require('multer')
+// const multer = require('multer')
 const router = Router();
 
-var cloudinary = require('cloudinary').v2;
+// var cloudinary = require('cloudinary').v2;
 const verifyToken = require('../helpers/auth');
 const jwt = require('jsonwebtoken');
 
-cloudinary.config({
-  cloud_name: 'dhlnheh7r',
-  api_key: '448993191284242',
-  api_secret: 'PZ-GzNd9xU6l4kirB7eKBD2F6Fw'
-});
+// cloudinary.config({
+//   cloud_name: 'dhlnheh7r',
+//   api_key: '448993191284242',
+//   api_secret: 'PZ-GzNd9xU6l4kirB7eKBD2F6Fw'
+// });
 
 
-const PATH = 'public/images/uploads/lessons';
+// const PATH = 'public/images/uploads/lessons';
 
-const storage = multer.diskStorage({
-    filename: (req, file, cb) => {
-        const fileName = file.originalname.toLowerCase().split(' ').join('-');
-        cb(null, fileName)
-    }
-});
+// const storage = multer.diskStorage({
+//     filename: (req, file, cb) => {
+//         const fileName = file.originalname.toLowerCase().split(' ').join('-');
+//         cb(null, fileName)
+//     }
+// });
 
-const upload = multer({
-    storage: storage,
-});
+// const upload = multer({
+//     storage: storage,
+// });
 
 router.get("/", function(req, res, next){
   Lesson.find(function(err, lesson){
@@ -54,24 +54,18 @@ router.put('/update/:id', function(req, res, next){
   })
 })
 
-router.post("/create", verifyToken ,upload.single('image') , function(req, res, next){
+router.post("/create", verifyToken , function(req, res, next){
 
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
     if(!err){
-      const resp = await cloudinary.uploader.upload(req.file.path, function(error, result){
-        if(error){
-          return error
-        }
-        return result
-      })
-      const { name, date } = req.body;
-      if (!name || !date) {
+      const { name, date, lessonId } = req.body;
+      if (!name || !date || !lessonId) {
         console.log("Error when getting data fields are empty")
         res.json({message: "Something went wrong", code: 400})
       } else {
         const data = {
           name,
-          imageUrl: resp.url,
+          lessonId,
           date
         }
         Lesson.create({...data}, (err, post) => {

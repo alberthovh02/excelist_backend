@@ -13,7 +13,7 @@ const lessonSchema = new Schema({
       type: Date,
       required: true
     },
-    imageUrl: {
+    lessonId: {
       type: String,
       required: true
     }
