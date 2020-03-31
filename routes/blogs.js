@@ -89,7 +89,7 @@ router.put('/:id', function(req, res, next){
     title,
     text
   }
-  Blogs.findByIdAndUpdate(req.params.id, {data}, {new: true}, (err, post) => {
+  Blogs.findByIdAndUpdate(req.params.id, data, {new: true}, (err, post) => {
     if(err) res.json({message: "Something went wrong", code: 500});
     else res.json({message: "success", code: 200, data: post})
   })
