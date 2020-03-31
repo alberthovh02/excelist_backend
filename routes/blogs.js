@@ -83,6 +83,18 @@ router.post("/create", verifyToken ,upload.single('image'),  async function(req,
 
 })
 
+router.put('/:id', function(req, res, next){
+  const { title, content } = req.body;
+  const data = {
+    title,
+    content
+  }
+  Blogs.findByIdAndUpdate(req.params.id, {data}, {new: true}, (err, post) => {
+    if(err) res.json({message: "Something went wrong", code: 500});
+    else res.json({message: "success", code: 200, data: post})
+  })
+})
+
 router.delete("/:id", function(req, res, next){
   console.log(">>>>>>>>>>.", req.params)
   Blogs.findByIdAndRemove(req.params.id,(err, post) => {
