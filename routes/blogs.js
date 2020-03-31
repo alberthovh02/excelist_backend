@@ -85,10 +85,10 @@ router.post("/create", verifyToken ,upload.single('image'),  async function(req,
 
 router.put('/:id', function(req, res, next){
   const { title, text } = req.body;
-  const data = {
-    title,
-    text
-  }
+  let data = {};
+  if(title) data.title = title;
+  if(text) data.text = text
+
   Blogs.findByIdAndUpdate(req.params.id, data, {new: true}, (err, post) => {
     if(err) res.json({message: "Something went wrong", code: 500});
     else res.json({message: "success", code: 200, data: post})
