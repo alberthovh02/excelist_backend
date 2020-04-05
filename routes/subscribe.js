@@ -104,7 +104,7 @@ router.post("/sendMail",upload.single('image'), async function(req, res, next){
 
 				transporter.sendMail(mailOptions, function(error, info) {
 					if (error) {
-						console.log(error);
+						console.log("Transporter error", error);
 						res.json({code: 400, message: `Նամակը չի ուղարկվել տեխ. խնդրի պատճառով`})
 					} else {
 						console.log("Email sent: " + info.response);
