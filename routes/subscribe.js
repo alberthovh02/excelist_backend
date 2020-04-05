@@ -62,10 +62,10 @@ router.post("/send", function(req, res, next) {
 		transporter.sendMail(mailOptions, function(error, info) {
 			if (error) {
 				console.log(error);
-				res.json({code: 400, message: 'something went wrong'}).code(400)
+				res.json({code: 400, message: 'something went wrong'})
 			} else {
 				console.log("Email sent: " + info.response);
-				res.json({code: 200, message: 'empty data'}).code(200)
+				res.json({code: 200, message: 'empty data'})
 			}
 		});
 	}
