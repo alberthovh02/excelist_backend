@@ -114,6 +114,18 @@ router.post("/create", verifyToken ,upload.any(),  async function(req, res, next
 //   }
 // })
 
+router.put('/:id', function(req, res, next){
+  const { title, text } = req.body;
+  let data = {};
+  if(title) data.title = title;
+  if(text) data.text = text
+
+  Course.findByIdAndUpdate(req.params.id, data, {new: true}, (err, post) => {
+    if(err) res.json({message: "Something went wrong", code: 500});
+    else res.json({message: "success", code: 200, data: post})
+  })
+})
+
 router.delete("/:id", function(req, res, next){
   console.log(">>>>>>>>>>.", req.params)
   Course.findByIdAndRemove(req.params.id,(err, post) => {
