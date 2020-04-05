@@ -56,7 +56,7 @@ router.post("/send", function(req, res, next) {
 			from: "albert.hovhannisyan.main@gmail.com",
 			to: email,
 			subject: "Excelist ակումբ",
-			text: "Դուք բաժանորդագրվել էք Excelist ակումբի նորություններին, շնորհակալ ենք մեզ վստահելու համար:"
+			html: '<div style="display: flex; justify-content:center; flex-direction: column; align-items: center"><p>Դուք բաժանորդագրվել էք Excelist ակումբի նորություններին, շնորհակալ ենք մեզ վստահելու համար:</p><div><div><a href="https://www.facebook.com/Excel.lessons/?fref=ts" target="_blank"><img src="https://res.cloudinary.com/dhlnheh7r/image/upload/v1586089443/facebook_d9jfol.png"/></a><a href="https://www.youtube.com/channel/UCIhWQ4k5FSaXrn8uKuLin7A" target="_blank"><img src="https://res.cloudinary.com/dhlnheh7r/image/upload/v1586089466/youtube_wlbgny.png"/></a><a href="https://www.linkedin.com/company/%D5%A7%D6%84%D5%BD%D5%A5%D5%AC%D5%AB%D5%BD%D5%BF-%D5%A1%D5%AF%D5%B8%D6%82%D5%B4%D5%A2/" target="_blank"><img src="https://res.cloudinary.com/dhlnheh7r/image/upload/v1586089450/linkedin_p2mp1z.png"/></a></div><p>Հարգանքով <<Էքսելիստ>> ՍՊԸ:</p><img src="https://res.cloudinary.com/dhlnheh7r/image/upload/v1586089462/transparent_ray9js.png" /></div></div>'
 		};
 
 		transporter.sendMail(mailOptions, function(error, info) {
