@@ -94,7 +94,7 @@ router.post("/sendMail",upload.single('image'), async function(req, res, next){
 			if (err) throw new Error(err);
 			// collectUsers(subscriber)
 			console.log('resp url>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', resp.url)
-			subscriber.map((item) => {
+			subscriber.forEach((item) => {
 				const mailOptions = {
 					from: "albert.hovhannisyan.main@gmail.com",
 					to: item.email,
