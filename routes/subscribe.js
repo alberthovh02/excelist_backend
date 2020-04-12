@@ -96,6 +96,7 @@ router.post("/sendMail",upload.single('image'), async function(req, res, next){
 			console.log('resp url>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', resp.url)
 			const emailAddresses = subscriber.map(item => item.email);
 			const emailAddressesString = emailAddresses.join(",")
+			console.log("ADDRESSES <<<<<<<<<<<<<<<<", emailAddressesString)
 			// subscriber.forEach((item) => {
 				// setTimeout(() => {
 					const mailOptions = {
