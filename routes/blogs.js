@@ -58,7 +58,7 @@ router.post("/create", verifyToken ,upload.single('image'),  async function(req,
       // console.log('resp', resp)
       const generatedUrl = `${title.trim()}`;
       // console.log("GENERATED URL", generatedUrl);
-      const url = `http://159.65.216.209:3000/uploads/images/album/${req.file.filename}`
+      const url = `http://159.65.216.209:3000/public/uploads/images/blogs/${req.file.filename}`
       // console.log("Url of blog image>>>>>>>>> ", url)
     	if (!title || !content) {
         console.log("Error when getting data fields are empty")
