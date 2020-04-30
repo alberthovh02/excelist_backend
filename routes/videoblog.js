@@ -5,15 +5,15 @@ const Videoblog = require("../models/videoblog");
 const router = Router();
 const PATH = 'public/images/uploads';
 
-var cloudinary = require('cloudinary').v2;
+// var cloudinary = require('cloudinary').v2;
 const verifyToken = require('../helpers/auth');
 const jwt = require('jsonwebtoken');
 
-cloudinary.config({
-  cloud_name: 'dhlnheh7r',
-  api_key: '448993191284242',
-  api_secret: 'PZ-GzNd9xU6l4kirB7eKBD2F6Fw'
-});
+// cloudinary.config({
+//   cloud_name: 'dhlnheh7r',
+//   api_key: '448993191284242',
+//   api_secret: 'PZ-GzNd9xU6l4kirB7eKBD2F6Fw'
+// });
 
 const storage = multer.diskStorage({
     // destination: (req, file, cb) => {
