@@ -28,6 +28,7 @@ const authRoute = require('./routes/auth');
 const albums = require('./routes/albums');
 const albumImage = require('./routes/albumImage')
 const joinus = require('./routes/join');
+const search = require('./routes/search');
 
 //Configurations
 const { server, database } = require("./config/config");
@@ -85,7 +86,7 @@ app.get("/", (req, res, next) => {
 
 
 app.use("/login", authRoute);
-// app.use("/",router)
+app.use("/search", search)
 app.use("/lesson", lessonRoute)
 app.use("/get-files", subscribe);
 app.use("/subscribes",subscribe);

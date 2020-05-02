@@ -3,22 +3,22 @@ const {Router} = require("express");
 const multer = require('multer');
 const Feedbacks = require("../models/feedbacks");
 const router = Router();
-var cloudinary = require('cloudinary').v2;
+// var cloudinary = require('cloudinary').v2;
 const verifyToken = require('../helpers/auth');
 const jwt = require('jsonwebtoken');
 
-cloudinary.config({
-  cloud_name: 'dhlnheh7r',
-  api_key: '448993191284242',
-  api_secret: 'PZ-GzNd9xU6l4kirB7eKBD2F6Fw'
-});
+// cloudinary.config({
+//   cloud_name: 'dhlnheh7r',
+//   api_key: '448993191284242',
+//   api_secret: 'PZ-GzNd9xU6l4kirB7eKBD2F6Fw'
+// });
 
-const PATH = 'public/images/uploads/feedbacks';
+const PATH = 'public/uploads/images/feedbacks';
 
 const storage = multer.diskStorage({
-    // destination: (req, file, cb) => {
-    //     cb(null, PATH);
-    // },
+    destination: (req, file, cb) => {
+        cb(null, PATH);
+    },
     filename: (req, file, cb) => {
         const fileName = file.originalname.toLowerCase().split(' ').join('-');
         cb(null, fileName)
@@ -27,14 +27,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage: storage,
-    // fileFilter: (req, file, cb) => {
-    //     if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
-    //         cb(null, true);
-    //     } else {
-    //         cb(null, false);
-    //         return cb(new Error('Allowed only .png, .jpg, .jpeg and .gif'));
-    //     }
-    // }
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error('Allowed only .png, .jpg, .jpeg and .gif'));
+        }
+    }
 });
 
 
@@ -50,13 +50,14 @@ router.post("/create",  verifyToken ,upload.single('image') ,function(req, res, 
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
     if(!err){
       	const { username, comment, link } = req.body;
-      const resp = await cloudinary.uploader.upload(req.file.path, function(error, result){
-        if(error){
-          return error
-        }
-        return result
-      })
-      const data = {username, comment, link, imageUrl: resp.url}
+      // const resp = await cloudinary.uploader.upload(req.file.path, function(error, result){
+      //   if(error){
+      //     return error
+      //   }
+      //   return result
+      // })
+      const url = `http://159.65.216.209:3000/public/uploads/images/feedbacks/${req.file.filename}`
+      const data = {username, comment, link, imageUrl: url}
   		Feedbacks.create({...data}, (err, post) => {
   			if (err) throw new Error(err);
   			res.json({message: "Success", code: 200, data: post});

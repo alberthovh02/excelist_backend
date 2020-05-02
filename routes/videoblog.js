@@ -3,22 +3,22 @@ const {Router} = require("express");
 const multer = require('multer');
 const Videoblog = require("../models/videoblog");
 const router = Router();
-const PATH = 'public/images/uploads';
+const PATH = 'public/uploads/images/videoblogs';
 
-var cloudinary = require('cloudinary').v2;
+// var cloudinary = require('cloudinary').v2;
 const verifyToken = require('../helpers/auth');
 const jwt = require('jsonwebtoken');
 
-cloudinary.config({
-  cloud_name: 'dhlnheh7r',
-  api_key: '448993191284242',
-  api_secret: 'PZ-GzNd9xU6l4kirB7eKBD2F6Fw'
-});
+// cloudinary.config({
+//   cloud_name: 'dhlnheh7r',
+//   api_key: '448993191284242',
+//   api_secret: 'PZ-GzNd9xU6l4kirB7eKBD2F6Fw'
+// });
 
 const storage = multer.diskStorage({
-    // destination: (req, file, cb) => {
-    //     cb(null, PATH);
-    // },
+    destination: (req, file, cb) => {
+        cb(null, PATH);
+    },
     filename: (req, file, cb) => {
         const fileName = file.originalname.toLowerCase().split(' ').join('-');
         cb(null, fileName)
@@ -44,9 +44,9 @@ router.get("/blogs-desc", function(req, res, next) {
 	});
 });
 
-router.get('/video/:videobloglink', function(req, res, next){
-  console.log("PArams ", req.params.videobloglink)
-})
+// router.get('/video/:videobloglink', function(req, res, next){
+//   console.log("PArams ", req.params.videobloglink)
+// })
 
 router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
 
@@ -55,23 +55,25 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
     const { language, title, video_link, isEmpty } = req.body;
       const changedVideolink = video_link.replace('watch?v=', 'embed/')
       const generatedUrl = `${title.trim()}_${language}`;
-      console.log(req.files[1])
-      const resp = await cloudinary.uploader.upload(req.files[0].path, function(error, result){
-        if(error){
-          return error
-        }
-        return result
-      })
-      if(req.files[1]){
-        var respFile = await cloudinary.uploader.upload(req.files[1].path, { public_id: req.files[1].originalname,resource_type: "auto" }, function(error, result){
-          if(error){
-            return error
-          }
-          return result
-        })
-      }
+      console.log(req.files)
+      // const resp = await cloudinary.uploader.upload(req.files[0].path, function(error, result){
+      //   if(error){
+      //     return error
+      //   }
+      //   return result
+      // })
+      // if(req.files[1]){
+      //   var respFile = await cloudinary.uploader.upload(req.files[1].path, { public_id: req.files[1].originalname,resource_type: "auto" }, function(error, result){
+      //     if(error){
+      //       return error
+      //     }
+      //     return result
+      //   })
+      // }
+      // console.log("0000", req.files[0].filename)
+      // console.log("1111", req.files[1].filename)
 
-      console.log("GENERATED URL", generatedUrl);
+      // console.log("GENERATED URL", generatedUrl);
       if (!language || !title || !video_link) {
         console.log("Error when getting data fields are empty")
         res.json({message: "Something went wrong", code: 400})
@@ -82,8 +84,8 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
             language,
             title,
             video_link: changedVideolink,
-            file_link: respFile.url,
-            imageUrl: resp.url,
+            file_link: `http://159.65.216.209:3000/public/uploads/images/videoblogs/${req.files[1].filename}`,
+            imageUrl: `http://159.65.216.209:3000/public/uploads/images/videoblogs/${req.files[0].filename}`,
             generatedUrl
           }
         }else {
@@ -91,7 +93,7 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
             language,
             title,
             video_link: changedVideolink,
-            imageUrl: resp.url,
+            imageUrl: `http://159.65.216.209:3000/public/uploads/images/videoblogs/${req.files[0].filename}`,
             generatedUrl,
             isEmpty
           }
