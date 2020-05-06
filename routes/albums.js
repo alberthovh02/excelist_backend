@@ -62,8 +62,8 @@ router.post("/create", verifyToken, async function(req, res, next){
         console.log("Error when getting data fields are empty")
     		res.json({message: "Something went wrong", code: 400})
     	} else {
-       
-        const url = `/uploads/images/album/${req.file.filename}`
+        
+        const url = `http://159.65.216.209:3000/public/uploads/images/album/${req.file.filename}`
     		const data = {
     			name,
     			imageUrl: url,

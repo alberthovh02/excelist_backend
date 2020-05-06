@@ -35,8 +35,7 @@ router.get("/", function(req, res, next) {
 });
 
 router.post("/send", function(req, res, next) {
-	const {name, email} = req.body;
-	console.log(name, email);
+	const { name, email, proficent } = req.body;
 	if (!name || !email) {
 		next();
 	} else {

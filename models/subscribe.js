@@ -9,6 +9,10 @@ const subscribeSchema = new Schema({
       type: String,
       required: true
     },
+    proficent: {
+        type: String,
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now
