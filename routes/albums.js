@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
-}).single("image");
+})
 
 router.get("/" ,function(req, res, next){
 
@@ -36,18 +36,18 @@ router.get("/" ,function(req, res, next){
       })
   })
 
-router.post("/create", verifyToken, async function(req, res, next){
+router.post("/create", verifyToken, upload.single("image") ,async function(req, res, next){
   console.log("Body", req.body)
   const { name } = req.body;
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
     if(!err){
-      upload(req, res, (err) => {
-        if(err){
-          console.log("Album image not saved");
-          res.json({message: "Album image not uploaded", code: 500})
-        }
-
-      })
+      // upload(req, res, (err) => {
+      //   if(err){
+      //     console.log("Album image not saved");
+      //     res.json({message: "Album image not uploaded", code: 500})
+      //   }
+      //
+      // })
      
       // const resp = await cloudinary.uploader.upload(req.file.path, function(error, result){
       //   if(error){
