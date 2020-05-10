@@ -13,23 +13,23 @@ router.get("/:keyword", async function(req, res, next){
             console.log("Something went wrong when finding in blogs")
             return false
         }
-        responseData.push(data)
+        data.length && responseData.push({data, type: "blog"})
     })
     await Videoblogs.find({ "title": { "$regex": req.params.keyword, "$options": "i" } }, (err, data) => {
         if(err){
             console.log("Something went wrong when finding in videoblogs")
             return false
         }
-        responseData.push(data)
+        data.length &&  responseData.push({data, type: "videoblog"})
     })
     await Courses.find({ "title": { "$regex": req.params.keyword, "$options": "i" } }, (err, data) => {
         if(err){
             console.log("Something went wrong when finding in courses")
             return false
         }
-        responseData.push(data)
+       data.length && responseData.push({data, type: "course"})
     })
-    res.send(responseData)
+    res.json({message: "Search finished", code: 200, data: responseData})
 })
 
 module.exports = router
