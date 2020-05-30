@@ -3,17 +3,10 @@ const { Router } = require("express");
 const multer = require('multer');
 const Albums = require("../models/albums")
 const router = Router();
-// var cloudinary = require('cloudinary').v2;
 const uniqid = require('uniqid');
 const verifyToken = require('../helpers/auth');
 const jwt = require('jsonwebtoken');
 const path = require("path");
-
-// cloudinary.config({
-//   cloud_name: 'dhlnheh7r',
-//   api_key: '448993191284242',
-//   api_secret: 'PZ-GzNd9xU6l4kirB7eKBD2F6Fw'
-// });
 
 const PATH = 'public/uploads/images/albums/';
 
@@ -64,7 +57,6 @@ router.post("/create/:id", verifyToken,  async function(req, res, next){
 router.delete("/delete/:albumId/:imageId",async function(req, res, next){
   Albums.findOneAndUpdate({_id: req.params.albumId}, { "$pull": {"images": { "id": req.params.imageId} } }, {new: true}, (err, data) => {
     if(err){
-      console.log("Something went wrong");
       res.json({message: "Something went wrong when deleting image", code: 500})
     }
     else{

@@ -7,15 +7,12 @@ const jwt = require('jsonwebtoken');
 
 
 router.post("/", function(req, res, next) {
-	// const { email, password } = req.body;
   const { login, password } = req.body;
-
-  const adminUser = Admin.findOne({login}, (err, user) => {
+  Admin.findOne({login}, (err, user) => {
 
     if(!err){
       if(user && user.password === password){
         jwt.sign({user}, "mysecretkey", (err, token) => {
-          console.log('jwt')
             return res.json({
               code: 200,
               message: "Successfully logged in",

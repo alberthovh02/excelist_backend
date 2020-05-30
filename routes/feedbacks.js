@@ -3,15 +3,8 @@ const {Router} = require("express");
 const multer = require('multer');
 const Feedbacks = require("../models/feedbacks");
 const router = Router();
-// var cloudinary = require('cloudinary').v2;
 const verifyToken = require('../helpers/auth');
 const jwt = require('jsonwebtoken');
-
-// cloudinary.config({
-//   cloud_name: 'dhlnheh7r',
-//   api_key: '448993191284242',
-//   api_secret: 'PZ-GzNd9xU6l4kirB7eKBD2F6Fw'
-// });
 
 const PATH = 'public/uploads/images/feedbacks';
 
@@ -50,12 +43,6 @@ router.post("/create",  verifyToken ,upload.single('image') ,function(req, res, 
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
     if(!err){
       	const { username, comment, link } = req.body;
-      // const resp = await cloudinary.uploader.upload(req.file.path, function(error, result){
-      //   if(error){
-      //     return error
-      //   }
-      //   return result
-      // })
       const url = `http://159.65.216.209:3000/public/uploads/images/feedbacks/${req.file.filename}`
       const data = {username, comment, link, imageUrl: url}
   		Feedbacks.create({...data}, (err, post) => {
@@ -69,14 +56,11 @@ router.post("/create",  verifyToken ,upload.single('image') ,function(req, res, 
 });
 
 router.put('/:id', function(req, res, next){
- 
-  console.log("iddd ", req.params.id, req.body)
-  Feedbacks.findByIdAndUpdate(
+    Feedbacks.findByIdAndUpdate(
     req.params.id,
     req.body,
     {new: true},
     (err, feedback) => {
-    // Handle any possible database errors
         if (err) return res.status(500).send(err);
         return res.json({message: "Updated", code: 200, data: feedback});
     }
@@ -84,7 +68,6 @@ router.put('/:id', function(req, res, next){
 })
 
 router.delete("/:id", function(req, res, next){
-  console.log(">>>>>>>>>>.", req.params.id)
   Feedbacks.findByIdAndRemove(req.params.id,(err, post) => {
     if(err) return next(err)
     res.json({message: "successfully deleted", code: 200});

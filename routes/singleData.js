@@ -1,5 +1,5 @@
 const express = require("express");
-const {Router} = require("express");
+const { Router } = require("express");
 const SingleData = require("../models/singleData");
 const router = Router();
 
@@ -30,7 +30,6 @@ router.post("/count", function(req, res, next) {
 		if(facebook_followers) data.facebook_followers = facebook_followers;
 		SingleData.findOneAndUpdate({}, data , {new: true, upsert: true}, (err, post) => {
 			if (err) console.log(err);
-			console.log("post", post)
 			res.json({message: "Success", code: 200, data: post});
 		});
 });
