@@ -5,15 +5,8 @@ const Videoblog = require("../models/videoblog");
 const router = Router();
 const PATH = 'public/uploads/images/videoblogs';
 
-// var cloudinary = require('cloudinary').v2;
 const verifyToken = require('../helpers/auth');
 const jwt = require('jsonwebtoken');
-
-// cloudinary.config({
-//   cloud_name: 'dhlnheh7r',
-//   api_key: '448993191284242',
-//   api_secret: 'PZ-GzNd9xU6l4kirB7eKBD2F6Fw'
-// });
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -44,10 +37,6 @@ router.get("/blogs-desc", function(req, res, next) {
 	});
 });
 
-// router.get('/video/:videobloglink', function(req, res, next){
-//   console.log("PArams ", req.params.videobloglink)
-// })
-
 router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
 
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
@@ -55,27 +44,7 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
     const { language, title, video_link, isEmpty } = req.body;
       const changedVideolink = video_link.replace('watch?v=', 'embed/')
       const generatedUrl = `${title.trim()}_${language}`;
-      console.log(req.files)
-      // const resp = await cloudinary.uploader.upload(req.files[0].path, function(error, result){
-      //   if(error){
-      //     return error
-      //   }
-      //   return result
-      // })
-      // if(req.files[1]){
-      //   var respFile = await cloudinary.uploader.upload(req.files[1].path, { public_id: req.files[1].originalname,resource_type: "auto" }, function(error, result){
-      //     if(error){
-      //       return error
-      //     }
-      //     return result
-      //   })
-      // }
-      // console.log("0000", req.files[0].filename)
-      // console.log("1111", req.files[1].filename)
-
-      // console.log("GENERATED URL", generatedUrl);
       if (!language || !title || !video_link) {
-        console.log("Error when getting data fields are empty")
         res.json({message: "Something went wrong", code: 400})
       } else {
         let data;
@@ -100,7 +69,6 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
         }
         Videoblog.create({...data}, (err, post) => {
           if (err){
-            console.log("Error when videoblog create ", err)
             res.json({message: "Something went wrong", code: 500})
           }else
           res.json({message: "Success", code: 200, data: post});
@@ -118,26 +86,6 @@ router.put("/:id",  verifyToken ,upload.any(), function(req, res, next){
     const { language, title, video_link, isEmpty } = req.body;
       const changedVideolink = video_link ? video_link.replace('watch?v=', 'embed/') : null
       const generatedUrl = title ? `${title.trim()}_${language}` : null ;
-      console.log(req.files[1])
-      if(req.files[0]){
-        var resp =  await cloudinary.uploader.upload(req.files[0].path, function(error, result){
-        if(error){
-          return error
-        }
-        return result
-      })
-      }
-
-      if(req.files[1]){
-        var respFile = await cloudinary.uploader.upload(req.files[1].path, { public_id: req.files[1].originalname,resource_type: "auto" }, function(error, result){
-          if(error){
-            return error
-          }
-          return result
-        })
-      }
-
-      console.log("GENERATED URL", generatedUrl);
         let data = {};
         if(language){
           data.language = language
@@ -153,15 +101,13 @@ router.put("/:id",  verifyToken ,upload.any(), function(req, res, next){
           data.isEmpty = isEmpty
         }
         if(req.files[1]){
-          data.file_link = respFile.url;
-          data.imageUrl = resp.url;
+          data.file_link = `http://159.65.216.209:3000/public/uploads/images/videoblogs/${req.files[1].filename}`;
+          data.imageUrl = `http://159.65.216.209:3000/public/uploads/images/videoblogs/${req.files[0].filename}`
         }if(req.files[0]) {
-         data.imageUrl = resp.url
+         data.imageUrl = `http://159.65.216.209:3000/public/uploads/images/videoblogs/${req.files[0].filename}`
         }
-        console.log("VIDEOBLOG ID ", req.params.id)
         Videoblog.findOneAndUpdate({_id: req.params.id},{...data},{new: true}, (err, post) => {
           if (err){
-            console.log("Error when videoblog create ", err)
             res.json({message: "Something went wrong", code: 500})
           }else
           res.json({message: "Success", code: 200, data: post});
@@ -174,7 +120,6 @@ router.put("/:id",  verifyToken ,upload.any(), function(req, res, next){
 router.delete("/:id", function(req, res, next){
   Videoblog.findByIdAndRemove(req.params.id,(err, post) => {
     if(err) {
-      console.log("Can't delete videoblog error: ", err)
       res.json({message: "Something went wrong", code: 500})
     }
     res.json({message: "Success", code: 200, data: post});

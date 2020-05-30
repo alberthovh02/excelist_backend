@@ -5,8 +5,6 @@ const router = Router();
 
 router.post("/sendMessage", function(req, res, next) {
 	const { name, email, title ,message } = req.body;
-	console.log('Email', email)
-
 	if (!name || !email || !message) {
     res.json({code: 400, message: 'empty data'}).code(400)
 		next();
@@ -30,7 +28,6 @@ router.post("/sendMessage", function(req, res, next) {
 
 		transporter.sendMail(mailOptions, function(error, info) {
 			if (error) {
-				console.log(error);
         res.json({code: 400, message: 'error'}).code(400)
 			} else {
 				console.log("Email sent: " + info.response);

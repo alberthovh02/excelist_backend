@@ -6,7 +6,6 @@ const router = Router();
 
 router.post("/sendFile", function(req, res, next) {
 	const { name, profecion, email, videoLink } = req.body;
-  console.log("Videolink>>>>", videoLink);
 	console.log('Email', email)
   Videoblog.findOne({title: videoLink},function(err, link) {
   		if (err) throw new Error(err);

@@ -14,7 +14,6 @@ router.get("/", function(req, res, next){
 router.post("/create", function(req, res, next){
   const { name, email, comment, parentId, parentType } = req.body;
 	if (!name || !email || !comment) {
-    console.log("Error when getting data fields are empty")
 		res.json({message: "Something went wrong", code: 400})
 	} else {
 		const data = {
@@ -26,7 +25,6 @@ router.post("/create", function(req, res, next){
 		}
 		Comments.create({...data}, (err, post) => {
 			if (err){
-        console.log("Error when videoblog create ", err)
 				res.json({message: "Something went wrong", code: 500})
 			}else
 			res.json({message: "Success", code: 200, data: post});
@@ -35,7 +33,6 @@ router.post("/create", function(req, res, next){
 })
 
 router.delete("/:id", function(req, res, next){
-  console.log(">>>>>>>>>>.", req.params)
   Comments.findByIdAndRemove(req.params.id,(err, post) => {
     if(err) res.json({message: "Something went wrong", code: 500});
     else res.json({message: "Success", code: 200, data: post});

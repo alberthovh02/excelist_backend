@@ -29,6 +29,7 @@ const albums = require('./routes/albums');
 const albumImage = require('./routes/albumImage')
 const joinus = require('./routes/join');
 const search = require('./routes/search');
+const certificates = require('./routes/certificates')
 
 //Configurations
 const { server, database } = require("./config/config");
@@ -104,6 +105,7 @@ app.use('/comments', comments);
 app.use('/albums', albums);
 app.use('/album-image', albumImage);
 app.use('/join', joinus);
+app.use('/certificates', certificates)
 
 const PORT = process.env.PORT || 3000;
 

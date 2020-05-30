@@ -5,9 +5,6 @@ const router = Router();
 const multer = require('multer');
 
 const storage = multer.diskStorage({
-    // destination: (req, file, cb) => {
-    //     cb(null, PATH);
-    // },
     filename: (req, file, cb) => {
         const fileName = file.originalname.toLowerCase().split(' ').join('-');
         cb(null, fileName)
@@ -28,8 +25,6 @@ const upload = multer({
 
 router.post("/",upload.single('file'), function(req, res, next) {
 	const { file } = req.body;
-	console.log('File upload', req.file)
-
 	if (!req.file) {
     res.json({code: 400, message: 'empty data'})
 		next();
@@ -57,7 +52,6 @@ router.post("/",upload.single('file'), function(req, res, next) {
 
 		transporter.sendMail(mailOptions, function(error, info) {
 			if (error) {
-				console.log(error);
         res.json({code: 400, message: 'error'}).code(400)
 			} else {
 				console.log("Email sent: " + info.response);
