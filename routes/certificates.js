@@ -18,8 +18,16 @@ router.get('/:id', function(req, res, next){
 })
 
 router.put('/:id', function(req, res, next){
-    Certificates.findOneAndUpdate({userId: req.params.id}, (err, data) => {
-        if(err) throw new Error(err);
+    Certificates.findOneAndUpdate(
+        {userId: req.params.id},
+        {...req.body} ,
+        {new:true},
+        (err, data) => {
+        if(err) {
+            res.json({message: `Something went wrong ${err}`, code: 400})
+            return false
+            next()
+        }
         res.json({code: 200, message: "Certificate updated", data})
     })
 })
