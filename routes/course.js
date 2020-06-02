@@ -41,6 +41,16 @@ router.get("/", function(req, res, next){
   })
 })
 
+router.get('/:id', function(req, res, next){
+    Course.findById(req.params.id, (err, data) => {
+        if(err) {
+            res.json({message: "Something went wrong", code: 500})
+            return false
+        }
+        res.json({message: "success", data, code: 200})
+    })
+})
+
 router.post("/create", verifyToken ,upload.any(),  async function(req, res, next){
   const { title, content } = req.body;
   const generatedUrl = `${title.trim()}`;

@@ -38,6 +38,23 @@ router.get("/" ,function(req, res, next){
       })
   })
 
+router.get('/:page', async(req, res, next) => {
+    const perPageLimit = 12;
+    const page = req.params.page || 1;
+    try{
+        const pages = await Blogs.count();
+        const pageLimitData = await Blogs
+            .find({})
+            .skip((perPageLimit * page) - perPageLimit)
+            .limit(perPageLimit)
+            .lean()
+        pageLimitData.forEach(el => el.pages = pages)
+        res.json({message: 'success',  data: [...pageLimitData ] , code: 200 })
+    }catch (e) {
+        throw new Error(e)
+    }
+})
+
 router.post("/create", verifyToken ,upload.single('image'),  async function(req, res, next){
 
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
