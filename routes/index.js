@@ -20,9 +20,11 @@ const upload = multer({
 });
 
 router.get("/", function(req, res, next){
-  Lesson.find(function(err, lesson){
+  Lesson.find(function(err, lessons){
     if(err) throw new Error(err);
-    res.json(lesson)
+    lessons = lessons.filter((lesson) => new Date(lesson.date) >= new Date(Date.now()))
+    lessons = lessons.sort((a, b) => new Date(a.date) - new Date(b.date))
+    res.json(lessons)
   })
 })
 

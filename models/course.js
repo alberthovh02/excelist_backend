@@ -9,6 +9,10 @@ const CourseSchema = new Schema({
       type: String,
       required: true
     },
+    orderId: {
+      type: Number,
+      required: true
+    },
     generatedUrl: {
       type: String,
       required: true

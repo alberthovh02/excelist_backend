@@ -94,6 +94,15 @@ router.put('/:id', function(req, res, next){
   })
 })
 
+router.put('/orders/:id', (req, res, next) => {
+  const { orderId } = req.body;
+  Course.findOneAndUpdate({_id: req.params.id}, {orderId: orderId}, { new: true }, (err, data) => {
+    if(err) res.json({message: "Something went wrong", code: 500});
+    else res.json({message: "success", code: 200, data: data})
+  }
+)
+})
+
 router.delete("/:id", function(req, res, next){
   Course.findByIdAndRemove(req.params.id,(err, post) => {
     if(err) res.json({message: "Something went wrong", code: 500})
