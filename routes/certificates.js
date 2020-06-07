@@ -37,16 +37,24 @@ router.post("/create", function(req, res, next){
     if (!userCertificates || !userCertificates.length) {
         res.json({message: "Empty certificate data", code: 400})
     } else {
-        userCertificates.map(certificate => {
-            Certificates.create({...certificate}, (err, post) => {
+        userCertificates.forEach(async (certificate) => {
+            await Certificates.create({...certificate}, (err, post) => {
                 if (err){
                     console.log("Error can't create certificates ", err)
-                    res.json({message: "Error can't create certificates", code: 500});
+                    // res.json({message: "Error can't create certificates", code: 500});
                     next()
                 }
             });
             res.json({message: "Certificates successfully added", code: 200, data: userCertificates});
         })
+        // Certificates.create(userCertificates, (err, post, next) => {
+        //     if(err) {
+        //         console.log("There are error");
+        //         res.json({message: "Error can't create certificates", code: 500});
+        //         // next()
+        //     }
+        // })
+        // res.json({message: "Certificates successfully added", code: 200, data: Certificates.find({})});
     }
 })
 
