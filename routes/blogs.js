@@ -61,7 +61,7 @@ router.post("/create", verifyToken ,upload.single('image'),  async function(req,
     if(!err){
       const { title, content } = req.body;
       const generatedUrl = `${title.trim()}`;
-      const url = `http://159.65.216.209:3000/public/uploads/images/blogs/${req.file.filename}`
+      const url = `https://159.65.216.209:3000/public/uploads/images/blogs/${req.file.filename}`
     	if (!title || !content) {
     		res.json({message: "Something went wrong", code: 400})
     	} else {

@@ -34,14 +34,14 @@ router.post("/",upload.single('file'), function(req, res, next) {
       port: 465,
       secure: true,
 			auth: {
-				user: "albert.hovhannisyan.main@gmail.com",
-				pass: "alberthovh02"
+				user: "excelistclub@gmail.com",
+				pass: "c12768291"
 			}
 		});
 
 		const mailOptions = {
-			from: "albert.hovhannisyan.main@gmail.com",
-			to: 'albert.hovhannisyan002@gmail.com',
+			from: "excelistclub@gmail.com",
+			to: 'info@excelist.am',
 			subject: "New CV from excelist.am",
 			html: `There are new cv waiting for review`,
 			attachments: [{

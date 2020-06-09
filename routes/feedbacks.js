@@ -43,7 +43,7 @@ router.post("/create",  verifyToken ,upload.single('image') ,function(req, res, 
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
     if(!err){
       	const { username, comment, link } = req.body;
-      const url = `http://159.65.216.209:3000/public/uploads/images/feedbacks/${req.file.filename}`
+      const url = `https://159.65.216.209:3000/public/uploads/images/feedbacks/${req.file.filename}`
       const data = {username, comment, link, imageUrl: url}
   		Feedbacks.create({...data}, (err, post) => {
   			if (err) throw new Error(err);

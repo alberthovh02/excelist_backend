@@ -20,8 +20,8 @@ router.post("/sendFile", function(req, res, next) {
       port: 465,
       secure: true,
 			auth: {
-				user: "albert.hovhannisyan.main@gmail.com",
-				pass: "alberthovh02"
+				user: "excelistclub@gmail.com",
+				pass: "c12768291"
 			}
 		});
 

@@ -38,7 +38,7 @@ router.post("/create", verifyToken, upload.single("image") ,async function(req, 
     		res.json({message: "Something went wrong", code: 400})
     	} else {
         
-        const url = `http://159.65.216.209:3000/public/uploads/images/album/${req.file.filename}`
+        const url = `https://159.65.216.209:3000/public/uploads/images/album/${req.file.filename}`
     		const data = {
     			name,
     			imageUrl: url,

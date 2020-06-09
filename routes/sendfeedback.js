@@ -6,7 +6,7 @@ const router = Router();
 router.post("/sendMessage", function(req, res, next) {
 	const { name, email, title ,message } = req.body;
 	if (!name || !email || !message) {
-    res.json({code: 400, message: 'empty data'}).code(400)
+    res.json({code: 400, message: 'empty data'})
 		next();
 	} else {
     const transporter = nodemailer.createTransport({
@@ -14,24 +14,25 @@ router.post("/sendMessage", function(req, res, next) {
       port: 465,
       secure: true,
 			auth: {
-				user: "albert.hovhannisyan.main@gmail.com",
-				pass: "alberthovh02"
+				user: "excelistclub@gmail.com",
+				pass: "c12768291"
 			}
 		});
 
 		const mailOptions = {
-			from: email || "albert.hovhannisyan.main@gmail.com",
-			to: 'albert.hovhannisyan002@gmail.com',
+			from: email || "excelistclub@gmail.com",
+			to: 'info@excelist.am',
 			subject: title || 'Նոր նամակ կայքից',
 			html: `Անուն Ազգանուն: ${name}<br/> Էլ.հասցե: ${email}<br/>Նամակ: ${message}`
 		};
 
 		transporter.sendMail(mailOptions, function(error, info) {
 			if (error) {
-        res.json({code: 400, message: 'error'}).code(400)
+				console.log('err', error)
+        res.json({code: 400, message: 'error'})
 			} else {
 				console.log("Email sent: " + info.response);
-        res.json({code: 200, message: 'ok'}).code(200)
+        res.json({code: 200, message: 'ok'})
 			}
 		});
 

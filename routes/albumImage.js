@@ -38,7 +38,7 @@ router.post("/create/:id", verifyToken,  async function(req, res, next){
           if(err){
             res.json({message: "Image not saved something went wrong", code: 500})
           }else{
-            const url = `http://159.65.216.209:3000/public/uploads/images/albums/${req.file.filename}`
+            const url = `https://159.65.216.209:3000/public/uploads/images/albums/${req.file.filename}`
             Albums.findByIdAndUpdate(req.params.id,{ $push: { images: {id: uniqid(), url} } } ,(err, post) => {
               if (err){
                 console.log("Error when adding album image ", err)
