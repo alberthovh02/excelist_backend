@@ -40,33 +40,6 @@ app.use(cors())
 app.use(bodyParser.json({ limit: '50mb' }))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use("/public", express.static(path.join(__dirname, 'public')));
-// app.use(fileUpload())
-// app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
-
-//Passport Middlewares
-// app.use(passport.initialize());
-// app.use(passport.session());
-//
-// const initializePassport = require('./config/passport')
-// initializePassport(
-//   passport,
-//   email => Admin.findOne({},(err, user) => err ? console.log(err) : user)
-// )
-//
-// function checkAuthenticated(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     return next()
-//   }
-//
-//   res.redirect('/login')
-// }
-//
-// function checkNotAuthenticated(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     return res.redirect('/')
-//   }
-//   next()
-// }
 
 //Database connection
 // mongoose.connect(`mongodb+srv://albert:Admin%23777!@cluster0-8xyhu.mongodb.net/test?retryWrites=true&w=majority`, { useNewUrlParser :"false"});
@@ -81,35 +54,27 @@ mongoose.connection.on("connected",(err,res) => {
     console.log("mongoose is connected");
 });
 
-app.use("/login", authRoute);
-app.use("/search", search)
-app.use("/lesson", lessonRoute)
-app.use("/get-files", subscribe);
-app.use("/subscribes",subscribe);
-app.use('/students', singleData);
-app.use('/video-blog', videoBlog);
-app.use("/blogs", blogs);
-app.use('/videoblogpost', videoblogpost);
-app.use('/blogpost', blogpost);
-app.use('/user-feedbacks', feedbacks);
-app.use('/course', course);
-app.use('/filerequest', filerequest);
-app.use('/images', imageupload);
-app.use('/feedback', sendfeedback)
-app.use('/comments', comments);
-app.use('/albums', albums);
-app.use('/album-image', albumImage);
-app.use('/join', joinus);
-app.use('/certificates', certificates)
+app.use("/api/v1/login", authRoute);
+app.use("/api/v1/search", search)
+app.use("/api/v1/lesson", lessonRoute)
+app.use("/api/v1/get-files", subscribe);
+app.use("/api/v1/subscribes",subscribe);
+app.use('/api/v1/students', singleData);
+app.use('/api/v1/video-blog', videoBlog);
+app.use("/api/v1/blogs", blogs);
+app.use('/api/v1/videoblogpost', videoblogpost);
+app.use('/api/v1/blogpost', blogpost);
+app.use('/api/v1/user-feedbacks', feedbacks);
+app.use('/api/v1/course', course);
+app.use('/api/v1/filerequest', filerequest);
+app.use('/api/v1/images', imageupload);
+app.use('/api/v1/feedback', sendfeedback)
+app.use('/api/v1/comments', comments);
+app.use('/api/v1/albums', albums);
+app.use('/api/v1/album-image', albumImage);
+app.use('/api/v1/join', joinus);
+app.use('/api/v1/certificates', certificates)
 
 const PORT = process.env.PORT || 5000;
-
-
-// app.post('/login/admin', checkNotAuthenticated, passport.authenticate('local', {
-//   successRedirect: '/',
-//   failureRedirect: '/login',
-//   failureFlash: true
-// }))
-
 
 app.listen(PORT, () => console.log(`App is running in port ${PORT}`))
