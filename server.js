@@ -1,3 +1,4 @@
+
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
@@ -5,6 +6,9 @@ const fileUpload = require("express-fileupload");
 const cors = require("cors");
 const path = require("path")
 var router = express.Router();
+var fs = require('fs');
+var pem = require('pem');
+var https = require('https');
 const session = require('express-session');
 const passport = require('passport');
 // const Admin = require('./models/admin');
@@ -31,9 +35,13 @@ const joinus = require('./routes/join');
 const search = require('./routes/search');
 const certificates = require('./routes/certificates')
 
+var privateKey  = fs.readFileSync('/etc/letsencrypt/live/excelist.tk/privkey.pem');
+var certificate = fs.readFileSync('/etc/letsencrypt/live/excelist.tk/fullchain.pem');
+var credentials = {key: privateKey, cert: certificate};
+
+var app = express()
 //Configurations
 const { server, database } = require("./config/config");
-const app = express();
 //Middlewares
 app.use(cors())
 // parse application/json
@@ -107,9 +115,9 @@ app.use('/album-image', albumImage);
 app.use('/join', joinus);
 app.use('/certificates', certificates)
 
-const PORT = process.env.PORT || 3000;
-
-
+const PORT = process.env.PORT || 5000;
+//app.listen(PORT, () => console.log("server is running in port 3000"))
+https.createServer(credentials, app).listen(PORT, () => console.log("App started"))
 // app.post('/login/admin', checkNotAuthenticated, passport.authenticate('local', {
 //   successRedirect: '/',
 //   failureRedirect: '/login',
@@ -117,4 +125,3 @@ const PORT = process.env.PORT || 3000;
 // }))
 
 
-app.listen(PORT, () => console.log(`App is running in port ${PORT}`))
