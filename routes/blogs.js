@@ -32,6 +32,23 @@ const upload = multer({
 });
 
 router.get("/" ,function(req, res, next){
+  await Blogs.find({}, async function(err, data) {
+    const blogArr = await Blogs.find({})
+
+    blogArr.forEach(function(doc){
+      var hostname = doc.imageUrl.slice(33);
+      Blogs.update({_id: doc._id}, { $set: { imageUrl: hostname } }, (err, success) => {
+        if(!err){
+          console.log("Success")
+        }else{ 
+          console.log("Error ", err)
+        }
+      })
+    })
+    
+		if (err) throw new Error(err);
+		console.log(res.json(data));
+	});
       Blogs.find(function(err, lesson){
         if(err) throw new Error(err);
         res.json(lesson)
@@ -61,7 +78,7 @@ router.post("/create", verifyToken ,upload.single('image'),  async function(req,
     if(!err){
       const { title, content } = req.body;
       const generatedUrl = `${title.trim()}`;
-      const url = `https://excelist.tk:3000/public/uploads/images/blogs/${req.file.filename}`
+      const url = `/uploads/images/blogs/${req.file.filename}`
     	if (!title || !content) {
     		res.json({message: "Something went wrong", code: 400})
     	} else {

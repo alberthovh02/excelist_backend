@@ -31,10 +31,10 @@ const upload = multer({
 });
 
 router.get("/blogs-desc", async function(req, res, next) {
- Videoblog.find(function(err, lesson){
-        if(err) throw new Error(err);
-        res.json(lesson)
-      })
+  Videoblog.find(function(err, lesson){
+    if(err) throw new Error(err);
+    res.json(lesson)
+  })
 });
 
 router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
