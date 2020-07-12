@@ -31,28 +31,10 @@ const upload = multer({
 });
 
 router.get("/blogs-desc", async function(req, res, next) {
-	await Videoblog.find({}, async function(err, data) {
-    if(data && data.imageUrl){
-      data.imageUrl = data.imageUrl.slice(30);
-      await Videoblog.save();
-    }
-
-    const VideoblogArr = await Videoblog.find({})
-
-    VideoblogArr.forEach(function(doc){
-      var hostname = doc.imageUrl.slice(33);
-      Videoblog.update({_id: doc._id}, { $set: { imageUrl: hostname } }, (err, success) => {
-        if(!err){
-          console.log("Success")
-        }else{ 
-          console.log("Error ", err)
-        }
+ Videoblog.find(function(err, lesson){
+        if(err) throw new Error(err);
+        res.json(lesson)
       })
-    })
-    
-		if (err) throw new Error(err);
-		console.log(res.json(data));
-	});
 });
 
 router.post("/create",  verifyToken ,upload.any(), function(req, res, next){

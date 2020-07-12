@@ -28,7 +28,8 @@ const authRoute = require('./routes/auth');
 const albums = require('./routes/albums');
 const albumImage = require('./routes/albumImage')
 const joinus = require('./routes/join');
-
+const search = require('./routes/search');
+const certificates = require('./routes/certificates')
 //Configurations
 const { server, database } = require("./config/config");
 const app = express();
