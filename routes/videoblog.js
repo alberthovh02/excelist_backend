@@ -30,8 +30,26 @@ const upload = multer({
     // }
 });
 
-router.get("/blogs-desc", function(req, res, next) {
-	Videoblog.find(function(err, data) {
+router.get("/blogs-desc", async function(req, res, next) {
+	await Videoblog.find({}, async function(err, data) {
+    if(data && data.imageUrl){
+      data.imageUrl = data.imageUrl.slice(30);
+      await Videoblog.save();
+    }
+
+    const VideoblogArr = await Videoblog.find({})
+
+    VideoblogArr.forEach(function(doc){
+      var hostname = doc.imageUrl.slice(33);
+      Videoblog.update({_id: doc._id}, { $set: { imageUrl: hostname } }, (err, success) => {
+        if(!err){
+          console.log("Success")
+        }else{ 
+          console.log("Error ", err)
+        }
+      })
+    })
+    
 		if (err) throw new Error(err);
 		console.log(res.json(data));
 	});
@@ -53,8 +71,8 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
             language,
             title,
             video_link: changedVideolink,
-            file_link: `https://excelist.tk:3000/public/uploads/images/videoblogs/${req.files[1].filename}`,
-            imageUrl: `https://excelist.tk:3000/public/uploads/images/videoblogs/${req.files[0].filename}`,
+            file_link: `/uploads/images/videoblogs/${req.files[1].filename}`,
+            imageUrl: `/uploads/images/videoblogs/${req.files[0].filename}`,
             generatedUrl
           }
         }else {
@@ -62,7 +80,7 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
             language,
             title,
             video_link: changedVideolink,
-            imageUrl: `https://excelist.tk:3000/public/uploads/images/videoblogs/${req.files[0].filename}`,
+            imageUrl: `/uploads/images/videoblogs/${req.files[0].filename}`,
             generatedUrl,
             isEmpty
           }
@@ -101,10 +119,10 @@ router.put("/:id",  verifyToken ,upload.any(), function(req, res, next){
           data.isEmpty = isEmpty
         }
         if(req.files[1]){
-          data.file_link = `https://excelist.tk:3000/public/uploads/images/videoblogs/${req.files[1].filename}`;
-          data.imageUrl = `https://excelist.tk:3000/public/uploads/images/videoblogs/${req.files[0].filename}`
+          data.file_link = `/uploads/images/videoblogs/${req.files[1].filename}`;
+          data.imageUrl = `/uploads/images/videoblogs/${req.files[0].filename}`
         }if(req.files[0]) {
-         data.imageUrl = `https://excelist.tk:3000/public/uploads/images/videoblogs/${req.files[0].filename}`
+         data.imageUrl = `/uploads/images/videoblogs/${req.files[0].filename}`
         }
         Videoblog.findOneAndUpdate({_id: req.params.id},{...data},{new: true}, (err, post) => {
           if (err){
