@@ -31,7 +31,7 @@ const upload = multer({
     }
 });
 
-router.get("/" ,function(req, res, next){
+router.get("/" ,async function(req, res, next){
   await Blogs.find({}, async function(err, data) {
     const blogArr = await Blogs.find({})
 
