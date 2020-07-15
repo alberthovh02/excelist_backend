@@ -31,28 +31,11 @@ const upload = multer({
     }
 });
 
-router.get("/" ,async function(req, res, next){
-  await Blogs.find({}, async function(err, data) {
-    const blogArr = await Blogs.find({})
-
-    blogArr.forEach(function(doc){
-      var hostname = doc.imageUrl.slice(27);
-      Blogs.update({_id: doc._id}, { $set: { imageUrl: hostname } }, (err, success) => {
-        if(!err){
-          console.log("Success")
-        }else{ 
-          console.log("Error ", err)
-        }
+router.get("/" ,function(req, res, next){
+      Blogs.find(function(err, lesson){
+        if(err) throw new Error(err);
+        res.json(lesson)
       })
-    })
-    
-		if (err) throw new Error(err);
-		console.log(res.json(data));
-	});
-      // Blogs.find(function(err, lesson){
-      //   if(err) throw new Error(err);
-      //   res.json(lesson)
-      // })
   })
 
 router.get('/:page', async(req, res, next) => {
