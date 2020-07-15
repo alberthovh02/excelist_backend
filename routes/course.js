@@ -40,7 +40,7 @@ router.get("/", async function(req, res, next){
 
     blogArr.forEach(function(doc){
       var hostname = doc.captionUrl.slice(33);
-      Course.update({_id: doc._id}, { $set: { imageUrl: hostname } }, (err, success) => {
+      Course.update({_id: doc._id}, { $set: { captionUrl: hostname } }, (err, success) => {
         if(!err){
           console.log("Success")
         }else{ 
