@@ -49,10 +49,10 @@ router.get("/" ,async function(req, res, next){
 		if (err) throw new Error(err);
 		console.log(res.json(data));
 	});
-      Blogs.find(function(err, lesson){
-        if(err) throw new Error(err);
-        res.json(lesson)
-      })
+      // Blogs.find(function(err, lesson){
+      //   if(err) throw new Error(err);
+      //   res.json(lesson)
+      // })
   })
 
 router.get('/:page', async(req, res, next) => {
