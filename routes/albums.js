@@ -21,12 +21,28 @@ const upload = multer({
   storage: storage,
 })
 
-router.get("/" ,function(req, res, next){
+router.get("/" ,async function(req, res, next){
+  await Albums.find({}, async function(err, data) {
+    const blogArr = await Albums.find({})
 
-      Albums.find(function(err, lesson){
-        if(err) throw new Error(err);
-        res.json(lesson)
+    blogArr.forEach(function(doc){
+      var hostname = doc.imageUrl.slice(33);
+      Albums.update({_id: doc._id}, { $set: { imageUrl: hostname } }, (err, success) => {
+        if(!err){
+          console.log("Success")
+        }else{ 
+          console.log("Error ", err)
+        }
       })
+    })
+    
+		if (err) throw new Error(err);
+		console.log(res.json(data));
+	});
+      // Albums.find(function(err, lesson){
+      //   if(err) throw new Error(err);
+      //   res.json(lesson)
+      // })
   })
 
 router.post("/create", verifyToken, upload.single("image") ,async function(req, res, next){
