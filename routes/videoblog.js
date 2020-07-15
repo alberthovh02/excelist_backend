@@ -53,8 +53,8 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
             language,
             title,
             video_link: changedVideolink,
-            file_link: `public/uploads/images/videoblogs/${req.files[1].filename}`,
-            imageUrl: `public/uploads/images/videoblogs/${req.files[0].filename}`,
+            file_link: `/uploads/images/videoblogs/${req.files[1].filename}`,
+            imageUrl: `/uploads/images/videoblogs/${req.files[0].filename}`,
             generatedUrl
           }
         }else {
@@ -62,7 +62,7 @@ router.post("/create",  verifyToken ,upload.any(), function(req, res, next){
             language,
             title,
             video_link: changedVideolink,
-            imageUrl: `public/uploads/images/videoblogs/${req.files[0].filename}`,
+            imageUrl: `/uploads/images/videoblogs/${req.files[0].filename}`,
             generatedUrl,
             isEmpty
           }
@@ -101,10 +101,10 @@ router.put("/:id",  verifyToken ,upload.any(), function(req, res, next){
           data.isEmpty = isEmpty
         }
         if(req.files[1]){
-          data.file_link = `public/uploads/images/videoblogs/${req.files[1].filename}`;
-          data.imageUrl = `public/uploads/images/videoblogs/${req.files[0].filename}`
+          data.file_link = `/uploads/images/videoblogs/${req.files[1].filename}`;
+          data.imageUrl = `/uploads/images/videoblogs/${req.files[0].filename}`
         }if(req.files[0]) {
-         data.imageUrl = `public/uploads/images/videoblogs/${req.files[0].filename}`
+         data.imageUrl = `/uploads/images/videoblogs/${req.files[0].filename}`
         }
         Videoblog.findOneAndUpdate({_id: req.params.id},{...data},{new: true}, (err, post) => {
           if (err){

@@ -61,7 +61,7 @@ router.post("/create", verifyToken ,upload.single('image'),  async function(req,
     if(!err){
       const { title, content } = req.body;
       const generatedUrl = `${title.trim()}`;
-      const url = `public/uploads/images/blogs/${req.file.filename}`
+      const url = `/uploads/images/blogs/${req.file.filename}`
     	if (!title || !content) {
     		res.json({message: "Something went wrong", code: 400})
     	} else {

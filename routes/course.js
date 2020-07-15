@@ -56,8 +56,8 @@ router.post("/create", verifyToken ,upload.any(),  async function(req, res, next
   const generatedUrl = `${title.trim()}`;
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
     if(!err){
-      const url = `public/uploads/images/courses/${req.files[0].filename}`
-      const captionUrl = `public/uploads/images/courses/${req.files[1].filename}`
+      const url = `/uploads/images/courses/${req.files[0].filename}`
+      const captionUrl = `/uploads/images/courses/${req.files[1].filename}`
 
       if (!title || !content) {
     		res.json({message: "Something went wrong", code: 400})
