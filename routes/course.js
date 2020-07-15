@@ -34,11 +34,28 @@ const upload = multer({
     }
 });
 
-router.get("/", function(req, res, next){
-  Course.find(function(err, lesson){
-    if(err) throw new Error(err);
-    res.json(lesson)
-  })
+router.get("/", async function(req, res, next){
+  await Course.find({}, async function(err, data) {
+    const blogArr = await Course.find({})
+
+    blogArr.forEach(function(doc){
+      var hostname = doc.imageUrl.slice(33);
+      Course.update({_id: doc._id}, { $set: { imageUrl: hostname } }, (err, success) => {
+        if(!err){
+          console.log("Success")
+        }else{ 
+          console.log("Error ", err)
+        }
+      })
+    })
+    
+		if (err) throw new Error(err);
+		console.log(res.json(data));
+	});
+  // Course.find(function(err, lesson){
+  //   if(err) throw new Error(err);
+  //   res.json(lesson)
+  // })
 })
 
 router.get('/:id', function(req, res, next){
@@ -56,8 +73,8 @@ router.post("/create", verifyToken ,upload.any(),  async function(req, res, next
   const generatedUrl = `${title.trim()}`;
   jwt.verify(req.token, 'mysecretkey', async(err, authData) => {
     if(!err){
-      const url = `https://excelist.tk:3000/public/uploads/images/courses/${req.files[0].filename}`
-      const captionUrl = `https://excelist.tk:3000/public/uploads/images/courses/${req.files[1].filename}`
+      const url = `public/uploads/images/courses/${req.files[0].filename}`
+      const captionUrl = `public/uploads/images/courses/${req.files[1].filename}`
 
       if (!title || !content) {
     		res.json({message: "Something went wrong", code: 400})
