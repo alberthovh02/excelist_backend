@@ -35,14 +35,16 @@ router.get("/blogs-desc", async function(req, res, next) {
     const blogArr = await Videoblog.find({})
 
     blogArr.forEach(function(doc){
-      var hostname = doc.imageUrl.slice(33);
-      Videoblog.update({_id: doc._id}, { $set: { imageUrl: hostname } }, (err, success) => {
-        if(!err){
-          console.log("Success")
-        }else{ 
-          console.log("Error ", err)
-        }
-      })
+      var hostname = doc['file_link'] ? doc['file_link'].slice(33) : null;
+      if(hostname){
+        Videoblog.update({_id: doc._id}, { $set: { file_link: hostname } }, (err, success) => {
+          if(!err){
+            console.log("Success")
+          }else{ 
+            console.log("Error ", err)
+          }
+        })
+      }
     })
     
 		if (err) throw new Error(err);
