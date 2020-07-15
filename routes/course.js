@@ -35,10 +35,23 @@ const upload = multer({
 });
 
 router.get("/", async function(req, res, next){
-  Course.find(function(err, lesson){
-    if(err) throw new Error(err);
-    res.json(lesson)
-  })
+  await Course.find({}, async function(err, data) {
+    const blogArr = await Course.find({})
+
+    blogArr.forEach(function(doc){
+      var hostname = doc.captionUrl.slice(33);
+      Course.update({_id: doc._id}, { $set: { imageUrl: hostname } }, (err, success) => {
+        if(!err){
+          console.log("Success")
+        }else{ 
+          console.log("Error ", err)
+        }
+      })
+    })
+
+		if (err) throw new Error(err);
+		console.log(res.json(data));
+	});
 })
 
 router.get('/:id', function(req, res, next){
