@@ -44,7 +44,7 @@ router.get('/:page', async(req, res, next) => {
     try{
         const pages = await Blogs.count();
         const pageLimitData = await Blogs
-            .find({}, null, {sort: {date: -1}})
+            .find({}, null, {sort: {created: -1}})
             .skip((perPageLimit * page) - perPageLimit)
             .limit(perPageLimit)
             .lean()
