@@ -31,7 +31,7 @@ const upload = multer({
 });
 
 router.get("/blogs-desc", async function(req, res, next) {
-  Videoblog.find(function(err, lesson){
+  Videoblog.find({}, null, {sort: {created: -1}}, function(err, lesson){
     if(err) throw new Error(err);
     res.json(lesson)
   })

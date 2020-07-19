@@ -16,6 +16,10 @@ const feedbacksSchema = new Schema({
     imageUrl: {
       type: String,
       required: true
+    },
+    created: {
+      type: Date,
+      default: Date.now
     }
 })
 

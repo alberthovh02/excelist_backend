@@ -24,6 +24,10 @@ const CourseSchema = new Schema({
     captionUrl: {
       type: String,
       required: true
+    },
+    created: {
+      type: Date,
+      default: Date.now
     }
 })
 
